@@ -4,6 +4,9 @@ export interface CreateInterestRequest {
   visitorName?: string;
   visitorContact?: string;
   message: string;
+  /** ISO time the requester proposes to pick up. */
+  pickupAt?: string;
+  pickupPlace?: string;
 }
 
 export interface InterestSummary {

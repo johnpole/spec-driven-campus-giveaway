@@ -59,6 +59,11 @@ import { PostDetail } from '../../core/models/post.model';
 
           <!-- Main Offer Banner -->
           <div class="flier-main">
+            @if (post()?.photoUrl) {
+              <div class="flier-photo">
+                <img [src]="post()?.photoUrl" [alt]="post()?.title" id="flier-photo" />
+              </div>
+            }
             <div class="price-banner" [class.is-free]="post()?.isFree || post()?.price === 0">
               @if (post()?.isFree || post()?.price === 0) {
                 <span>FREE GEAR</span>
@@ -267,6 +272,26 @@ import { PostDetail } from '../../core/models/post.model';
         text-align: center;
         margin-bottom: 14px;
 
+        /* The photo is what catches the eye on a dorm bulletin board */
+        .flier-photo {
+          width: 100%;
+          aspect-ratio: 4 / 3;
+          margin-bottom: 12px;
+          border-radius: 12px;
+          overflow: hidden;
+          border: 2px solid #111827;
+          background: #f3f4f6;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+        }
+
         .price-banner {
           display: inline-block;
           background: #111827;
@@ -448,6 +473,11 @@ import { PostDetail } from '../../core/models/post.model';
 
       .no-print {
         display: none !important;
+      }
+
+      .flier-photo {
+        break-inside: avoid;
+        page-break-inside: avoid;
       }
 
       .flier-backdrop {

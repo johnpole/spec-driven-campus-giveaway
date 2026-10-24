@@ -16,6 +16,8 @@ public class InterestDocument {
     private String inquirerUserId;
     private String inquirerEmail;
     private String message;
+    private Date pickupAt;
+    private String pickupPlace;
     private Date createdAt;
 
     public InterestDocument() {
@@ -83,5 +85,21 @@ public class InterestDocument {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Date getPickupAt() {
+        return pickupAt;
+    }
+
+    public void setPickupAt(Date pickupAt) {
+        this.pickupAt = pickupAt;
+    }
+
+    public String getPickupPlace() {
+        return pickupPlace;
+    }
+
+    public void setPickupPlace(String pickupPlace) {
+        this.pickupPlace = pickupPlace;
     }
 }

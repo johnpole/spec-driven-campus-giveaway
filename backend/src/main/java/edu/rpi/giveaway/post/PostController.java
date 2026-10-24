@@ -13,8 +13,11 @@ public class PostController {
 
     private final PostService postService;
 
-    public PostController(PostService postService) {
+    private final edu.rpi.giveaway.interest.InterestService interestService;
+
+    public PostController(PostService postService, edu.rpi.giveaway.interest.InterestService interestService) {
         this.postService = postService;
+        this.interestService = interestService;
     }
 
     @PostMapping
@@ -36,7 +39,14 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<PostDetailResponse> getPostDetail(@PathVariable String id) {
         PostDetailResponse detail = postService.getPostDetail(id);
-        return ResponseEntity.ok(detail);
+        edu.rpi.giveaway.auth.UserPrincipal viewer = edu.rpi.giveaway.auth.UserContext.getCurrentUser();
+        if (viewer == null) {
+            return ResponseEntity.ok(detail);
+        }
+        boolean owned = postService.findRawById(id)
+                .map(p -> viewer.userId().equals(p.getAuthorUserId()))
+                .orElse(false);
+        return ResponseEntity.ok(detail.withViewer(owned, interestService.hasRequested(id, viewer.userId())));
     }
 
     @PatchMapping("/{id}/status")

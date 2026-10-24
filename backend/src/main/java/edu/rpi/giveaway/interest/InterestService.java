@@ -37,43 +37,58 @@ public class InterestService {
             throw new ItemNotAvailableException("Item has expired and is no longer available");
         }
 
-        edu.rpi.giveaway.auth.UserPrincipal currentUser = edu.rpi.giveaway.auth.UserContext.getCurrentUser();
-        if (currentUser != null && post.getAuthorUserId() != null && post.getAuthorUserId().equals(currentUser.userId())) {
+        edu.rpi.giveaway.auth.UserPrincipal currentUser = edu.rpi.giveaway.auth.UserContext.requireCurrentUser();
+        if (post.getAuthorUserId() != null && post.getAuthorUserId().equals(currentUser.userId())) {
             throw new IllegalArgumentException("You cannot express interest in an item you posted");
         }
-
-        String name;
-        String contact;
-        if (currentUser != null) {
-            name = (request.visitorName() != null && !request.visitorName().isBlank())
-                    ? request.visitorName().trim()
-                    : (currentUser.name() != null ? currentUser.name() : "Google User");
-            contact = (request.visitorContact() != null && !request.visitorContact().isBlank())
-                    ? request.visitorContact().trim()
-                    : currentUser.email();
-        } else {
-            if (request.visitorName() == null || request.visitorName().isBlank()
-                    || request.visitorContact() == null || request.visitorContact().isBlank()) {
-                throw new edu.rpi.giveaway.auth.UnauthorizedException("Authentication is required to express interest");
-            }
-            name = request.visitorName().trim();
-            contact = request.visitorContact().trim();
+        if (hasRequested(postId, currentUser.userId())) {
+            throw new ItemNotAvailableException("You already sent a request for this item");
         }
+        validatePickupTime(request.pickupAt(), post);
+
+        // Signed-in students: name defaults to the account; contact may be a phone they prefer.
+        String name = (request.visitorName() != null && !request.visitorName().isBlank())
+                ? request.visitorName().trim()
+                : (currentUser.name() != null ? currentUser.name() : currentUser.email());
+        String contact = (request.visitorContact() != null && !request.visitorContact().isBlank())
+                ? request.visitorContact().trim()
+                : currentUser.email();
 
         InterestDocument interest = new InterestDocument();
         interest.setId(UUID.randomUUID().toString());
         interest.setPostId(postId);
         interest.setVisitorName(name);
         interest.setVisitorContact(contact);
-        interest.setInquirerUserId(currentUser != null ? currentUser.userId() : null);
-        interest.setInquirerEmail(currentUser != null ? currentUser.email() : null);
+        interest.setInquirerUserId(currentUser.userId());
+        interest.setInquirerEmail(currentUser.email());
         interest.setMessage(request.message() != null ? request.message().trim() : null);
+        interest.setPickupAt(request.pickupAt() != null ? Date.from(request.pickupAt()) : null);
+        interest.setPickupPlace(request.pickupPlace() != null && !request.pickupPlace().isBlank()
+                ? request.pickupPlace().trim() : post.getPickupLocation());
         interest.setCreatedAt(new Date());
 
         interestRepository.save(interest);
         postService.incrementInterestCount(postId);
 
         log.info("Registered interest from {} for item {}", name, postId);
+    }
+
+    /** True when this user already sent a request for this item. */
+    public boolean hasRequested(String postId, String userId) {
+        return userId != null && interestRepository.findByInquirerUserId(userId).stream()
+                .anyMatch(i -> postId.equals(i.getPostId()));
+    }
+
+    private static void validatePickupTime(java.time.Instant pickupAt, PostDocument post) {
+        if (pickupAt == null) {
+            return;
+        }
+        if (pickupAt.isBefore(java.time.Instant.now())) {
+            throw new IllegalArgumentException("Pickup time must be in the future");
+        }
+        if (post.getAvailableUntil() != null && pickupAt.isAfter(post.getAvailableUntil().toInstant())) {
+            throw new IllegalArgumentException("Pickup time must be before the item's available-until date");
+        }
     }
 
     public List<InterestDocument> getInterestsByInquirer(String userId) {

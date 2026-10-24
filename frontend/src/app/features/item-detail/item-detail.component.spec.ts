@@ -5,6 +5,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of, throwError } from 'rxjs';
 import { ItemDetailComponent } from './item-detail.component';
 import { PostService } from '../../core/services/post.service';
+import { AuthService } from '../../core/services/auth.service';
 import { InterestService } from '../../core/services/interest.service';
 import { PostDetail } from '../../core/models/post.model';
 import { InterestSummary } from '../../core/models/interest.model';
@@ -38,6 +39,7 @@ describe('ItemDetailComponent', () => {
   };
 
   beforeEach(async () => {
+    localStorage.clear();
     await TestBed.configureTestingModule({
       imports: [ItemDetailComponent],
       providers: [
@@ -85,53 +87,60 @@ describe('ItemDetailComponent', () => {
     expect(compiled.querySelector('.description-text')?.textContent).toContain('Clean study desk in Cary Hall');
   });
 
-  it('should open the bottom sheet modal when clicking "I\'m interested"', () => {
-    expect(component.sheetOpen()).toBeFalse();
-    const btn = fixture.nativeElement.querySelector('#open-interest-modal') as HTMLButtonElement;
-    btn.click();
+  function signIn(): void {
+    TestBed.inject(AuthService).setCredential('test-token:u-7:taylor@rpi.edu:Taylor Smith');
     fixture.detectChanges();
+  }
 
-    expect(component.sheetOpen()).toBeTrue();
+  it('asks visitors to sign in instead of opening the request form', () => {
+    const btn = fixture.nativeElement.querySelector('#open-interest-modal') as HTMLButtonElement;
+    expect(btn.textContent).toContain('Sign in to request pickup');
+    btn.click();
+    expect(component.sheetOpen()).toBeFalse();
+    expect(TestBed.inject(AuthService).authModalOpen()).toBeTrue();
   });
 
-  it('should submit interest inquiry successfully and show toast', () => {
-    const newSummary: InterestSummary = {
-      count: 2,
-      firstNames: ['Jordan', 'Taylor']
-    };
-    spyOn(interestService, 'createInterest').and.returnValue(of(newSummary));
-
+  it('prefills name, email and pickup place for signed-in students', () => {
+    signIn();
     component.openInterestSheet();
-    component.interestForm.setValue({
-      name: 'Taylor Smith',
-      contact: 'smitht@rpi.edu',
-      message: 'Can I pick this up today?'
-    });
+    expect(component.sheetOpen()).toBeTrue();
+    expect(component.interestForm.value.name).toBe('Taylor Smith');
+    expect(component.interestForm.value.contact).toBe('taylor@rpi.edu');
+    expect(component.interestForm.value.pickupPlace).toBe(mockPost.pickupLocation);
+    expect(component.interestForm.value.pickupAt).toBeTruthy();
+  });
+
+  it('sends a pickup request with time and place, then shows "Request already sent"', () => {
+    signIn();
+    spyOn(interestService, 'createInterest').and.returnValue(of({ count: 2, firstNames: ['Jordan', 'Taylor'] }));
+    component.openInterestSheet();
+    component.interestForm.patchValue({ pickupAt: '2030-05-01T17:00', pickupPlace: 'Union lobby', message: 'Can I pick this up?' });
 
     component.submitInterest();
     fixture.detectChanges();
 
-    expect(interestService.createInterest).toHaveBeenCalledWith('desk-123', {
-      name: 'Taylor Smith',
-      contact: 'smitht@rpi.edu',
-      message: 'Can I pick this up today?'
-    });
+    const req = (interestService.createInterest as jasmine.Spy).calls.mostRecent().args[1];
+    expect(req.name).toBe('Taylor Smith');
+    expect(req.pickupPlace).toBe('Union lobby');
+    expect(new Date(req.pickupAt).getTime()).toBe(new Date('2030-05-01T17:00').getTime());
     expect(component.sheetOpen()).toBeFalse();
-    expect(component.toastMessage()).toContain('Note sent to Alex Rivera!');
+    expect(fixture.nativeElement.querySelector('#request-already-sent')?.textContent).toContain('Request already sent');
+    expect(fixture.nativeElement.querySelector('#open-interest-modal')).toBeNull();
   });
 
-  it('should display conflict error in bottom sheet if item is claimed (409)', () => {
+  it('shows the owner a link to their requests instead of "I\'m interested"', () => {
+    component.post.set({ ...mockPost, ownedByViewer: true });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('#open-interest-modal')).toBeNull();
+    expect(fixture.nativeElement.querySelector('#manage-own-listing')).toBeTruthy();
+  });
+
+  it('shows a conflict error in the sheet if the item was just claimed (409)', () => {
+    signIn();
     spyOn(interestService, 'createInterest').and.returnValue(
-      throwError(() => ({ status: 409, error: { message: 'Item already claimed' } }))
+      throwError(() => ({ status: 409, error: { error: 'Item is already claimed and no longer available' } }))
     );
-
     component.openInterestSheet();
-    component.interestForm.setValue({
-      name: 'Taylor Smith',
-      contact: 'smitht@rpi.edu',
-      message: 'Interested!'
-    });
-
     component.submitInterest();
     fixture.detectChanges();
 

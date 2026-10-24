@@ -21,10 +21,13 @@ public class UserController {
 
     private final PostRepository postRepository;
     private final InterestRepository interestRepository;
+    private final edu.rpi.giveaway.interest.InterestReplyService replyService;
 
-    public UserController(PostRepository postRepository, InterestRepository interestRepository) {
+    public UserController(PostRepository postRepository, InterestRepository interestRepository,
+                          edu.rpi.giveaway.interest.InterestReplyService replyService) {
         this.postRepository = postRepository;
         this.interestRepository = interestRepository;
+        this.replyService = replyService;
     }
 
     @GetMapping("/posts")
@@ -35,7 +38,7 @@ public class UserController {
         List<UserPostItemResponse> responses = posts.stream().map(post -> {
             List<InterestDocument> inquiries = interestRepository.findByPostId(post.getId());
             List<InterestDetailResponse> inquiryResponses = inquiries.stream()
-                    .map(InterestDetailResponse::fromDocument)
+                    .map(i -> InterestDetailResponse.fromDocument(i, replyService.repliesFor(i.getId())))
                     .toList();
 
             return new UserPostItemResponse(
@@ -69,6 +72,7 @@ public class UserController {
             String title = "Item";
             String photoUrl = "";
             String status = "UNKNOWN";
+            String sellerName = null;
 
             if (interest.getPostId() != null) {
                 var postOpt = postRepository.findById(interest.getPostId());
@@ -77,6 +81,7 @@ public class UserController {
                     title = post.getTitle();
                     photoUrl = post.getPhotoUrl();
                     status = post.getStatus();
+                    sellerName = post.getPosterName();
                 }
             }
 
@@ -87,7 +92,11 @@ public class UserController {
                     photoUrl,
                     status,
                     interest.getMessage(),
-                    interest.getCreatedAt() != null ? interest.getCreatedAt().toInstant() : null
+                    interest.getCreatedAt() != null ? interest.getCreatedAt().toInstant() : null,
+                    sellerName,
+                    interest.getPickupAt() != null ? interest.getPickupAt().toInstant() : null,
+                    interest.getPickupPlace(),
+                    replyService.repliesFor(interest.getId())
             ));
         }
 

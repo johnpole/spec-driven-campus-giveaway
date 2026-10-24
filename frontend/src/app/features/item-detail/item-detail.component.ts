@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
+  effect,
   inject,
-  signal
+  signal,
+  untracked
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -53,8 +55,49 @@ export class ItemDetailComponent implements OnInit {
         Validators.pattern('^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}|\\+[1-9]\\d{1,14})$')
       ]
     ],
+    pickupAt: ['', [Validators.required]],
+    pickupPlace: ['', [Validators.required, Validators.maxLength(150)]],
     message: ['Hi! When can I pick this up?', [Validators.required, Validators.maxLength(500)]]
   });
+
+  constructor() {
+    // Re-fetch when the viewer signs in or out: the API tells us if they own or already requested this item.
+    effect(() => {
+      this.authService.isAuthenticated();
+      const id = untracked(() => this.post()?.id);
+      if (id) {
+        untracked(() => this.refreshViewerState(id));
+      }
+    });
+  }
+
+  private refreshViewerState(id: string): void {
+    this.postService.getPost(id).subscribe({ next: (item) => this.post.set(item), error: () => {} });
+  }
+
+  /** Earliest pickup the form allows: now, in the browser's local time (for datetime-local). */
+  get minPickup(): string {
+    return this.toLocalInput(new Date());
+  }
+
+  /** Latest pickup: the item's available-until date. */
+  get maxPickup(): string | null {
+    const until = this.post()?.availableUntil;
+    return until ? this.toLocalInput(new Date(until)) : null;
+  }
+
+  private toLocalInput(d: Date): string {
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  private defaultPickup(): string {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    d.setHours(17, 0, 0, 0);
+    const until = this.post()?.availableUntil;
+    return this.toLocalInput(until && d > new Date(until) ? new Date() : d);
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -99,9 +142,22 @@ export class ItemDetailComponent implements OnInit {
   }
 
   openInterestSheet(): void {
-    if (this.post()?.status === 'CLAIMED') {
+    const item = this.post();
+    if (!item || item.status === 'CLAIMED' || item.ownedByViewer || item.requestedByViewer) {
       return;
     }
+    if (!this.authService.isAuthenticated()) {
+      this.authService.openAuthModal();
+      return;
+    }
+    // Prefill from the signed-in account; the student only adds when and where.
+    const user = this.authService.currentUser();
+    this.interestForm.patchValue({
+      name: user?.name ?? '',
+      contact: user?.email ?? '',
+      pickupPlace: item.pickupLocation,
+      pickupAt: this.defaultPickup()
+    });
     this.sheetError.set(null);
     this.sheetOpen.set(true);
   }
@@ -142,7 +198,9 @@ export class ItemDetailComponent implements OnInit {
     const req: CreateInterestRequest = {
       name: formVal.name!.trim(),
       contact: formVal.contact!.trim(),
-      message: formVal.message?.trim() || ''
+      message: formVal.message?.trim() || '',
+      pickupAt: new Date(formVal.pickupAt!).toISOString(),
+      pickupPlace: formVal.pickupPlace!.trim()
     };
 
     this.interestService.createInterest(currentPost.id, req).subscribe({
@@ -155,8 +213,9 @@ export class ItemDetailComponent implements OnInit {
           });
         }
         this.isSubmitting.set(false);
+        this.post.update((p) => (p ? { ...p, requestedByViewer: true } : p));
         this.closeInterestSheet();
-        this.showToast(`Note sent to ${currentPost.posterName}!`);
+        this.showToast(`Request sent to ${currentPost.posterName}! Replies show up in My Activity.`);
         this.interestService.getSummary(currentPost.id).subscribe({
           next: (s) => this.interestSummary.set({
             ...s,
@@ -169,6 +228,13 @@ export class ItemDetailComponent implements OnInit {
       error: (err) => {
         this.isSubmitting.set(false);
         if (err.status === 409) {
+          const msg: string = err.error?.error || '';
+          if (msg.includes('already sent')) {
+            this.post.update((p) => (p ? { ...p, requestedByViewer: true } : p));
+            this.closeInterestSheet();
+            this.showToast('You already sent a request for this item.');
+            return;
+          }
           this.sheetError.set('This item has just been claimed or has expired.');
         } else {
           this.sheetError.set(err.error?.message || err.error?.error || 'Failed to send interest note. Please check your contact information.');

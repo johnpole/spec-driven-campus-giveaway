@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal, effect, untracked } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PickupThreadComponent } from '../../shared/components/pickup-thread/pickup-thread.component';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
 import { UserService } from '../../core/services/user.service';
@@ -10,7 +11,7 @@ import { UserInquiryItem, UserPostItem } from '../../core/models/user.model';
 @Component({
   selector: 'app-my-activity',
   standalone: true,
-  imports: [RouterLink, DatePipe, DecimalPipe, HeaderComponent, BottomNavComponent],
+  imports: [RouterLink, DatePipe, DecimalPipe, HeaderComponent, BottomNavComponent, PickupThreadComponent],
   templateUrl: './my-activity.component.html',
   styleUrl: './my-activity.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -68,6 +69,11 @@ export class MyActivityComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  /** mailto: for emails, tel: for phone numbers. */
+  contactHref(contact: string): string {
+    return contact?.includes('@') ? `mailto:${contact}` : `tel:${contact}`;
   }
 
   signIn(): void {

@@ -93,4 +93,19 @@ public class FirestoreInterestRepository implements InterestRepository {
         }
         return results;
     }
+
+    @Override
+    public java.util.Optional<InterestDocument> findById(String id) {
+        if (firestore == null) {
+            return fallbackStore.values().stream().flatMap(List::stream)
+                    .filter(i -> id.equals(i.getId())).findFirst();
+        }
+        try {
+            return firestore.collectionGroup("interests").whereEqualTo("id", id).get().get()
+                    .getDocuments().stream().findFirst()
+                    .map(doc -> doc.toObject(InterestDocument.class));
+        } catch (Exception e) {
+            throw new RuntimeException("Database error reading interest", e);
+        }
+    }
 }

@@ -115,16 +115,23 @@
                     <!-- Inquiries Details Collapsible -->
                     @if (item.inquiries && item.inquiries.length > 0) {
                       <div class="inquiries-panel">
-                        <h4 class="inquiries-title">Interested Buyers:</h4>
+                        <h4 class="inquiries-title">Pickup requests ({{ item.inquiries.length }})</h4>
                         <ul class="inquiry-items-list">
                           @for (inq of item.inquiries; track inq.id) {
                             <li class="inquiry-row">
                               <div class="inquirer-info">
-                                <span class="inquirer-name">{{ inq.inquirerName }}</span>
-                                <a [href]="'mailto:' + inq.inquirerEmail" class="inquiry-email-link">{{ inq.inquirerEmail }}</a>
-                                <span class="inquiry-time">{{ inq.createdAt | date:'short' }}</span>
+                                <span class="inquirer-name">{{ inq.visitorName }}</span>
+                                <a [href]="contactHref(inq.visitorContact)" class="inquiry-email-link">{{ inq.visitorContact }}</a>
+                                <span class="inquiry-time">Requested {{ inq.createdAt | date:'MMM d, h:mm a' }}</span>
                               </div>
-                              <p class="inquiry-message">"{{ inq.message }}"</p>
+                              <app-pickup-thread
+                                [interestId]="inq.id"
+                                myRole="SELLER"
+                                [requesterName]="inq.visitorName"
+                                [firstMessage]="inq.message"
+                                [pickupAt]="inq.pickupAt"
+                                [pickupPlace]="inq.pickupPlace"
+                                [replies]="inq.replies || []" />
                             </li>
                           }
                         </ul>
@@ -172,12 +179,12 @@
               </div>
             } @else {
               <div class="requests-list">
-                @for (req of myInterests(); track req.interestId) {
+                @for (req of myInterests(); track req.id) {
                   <article class="request-card">
                     <div class="request-main">
                       <div class="req-image-col">
-                        @if (req.postPhotoUrl) {
-                          <img [src]="req.postPhotoUrl" [alt]="req.postTitle" class="req-thumb" />
+                        @if (req.itemPhotoUrl) {
+                          <img [src]="req.itemPhotoUrl" [alt]="req.itemTitle" class="req-thumb" />
                         } @else {
                           <div class="thumb-placeholder">
                             <span class="material-symbols-outlined">image</span>
@@ -187,27 +194,24 @@
 
                       <div class="req-info-col">
                         <div class="req-header-row">
-                          <span class="status-badge" [class.status-available]="req.postStatus === 'AVAILABLE'" [class.status-taken]="req.postStatus === 'TAKEN' || req.postStatus === 'CLAIMED'">
-                            {{ req.postStatus }}
-                          </span>
-                          <span class="req-price">
-                            @if (req.postPrice === 0) {
-                              <strong class="free-text">FREE</strong>
-                            } @else {
-                              ${{ req.postPrice }}
-                            }
+                          <span class="status-badge" [class.status-available]="req.itemStatus === 'AVAILABLE'" [class.status-taken]="req.itemStatus === 'TAKEN' || req.itemStatus === 'CLAIMED'">
+                            {{ req.itemStatus }}
                           </span>
                         </div>
 
                         <h3 class="req-title">
-                          <a [routerLink]="['/items', req.postId]">{{ req.postTitle }}</a>
+                          <a [routerLink]="['/items', req.postId]">{{ req.itemTitle }}</a>
                         </h3>
-                        <p class="req-meta">{{ req.postCategory }} · Requested {{ req.createdAt | date:'shortDate' }}</p>
+                        <p class="req-meta">From {{ req.sellerName || 'the poster' }} · Requested {{ req.createdAt | date:'MMM d' }}</p>
 
-                        <div class="your-note-box">
-                          <span class="note-label">Your pickup note:</span>
-                          <p class="note-text">"{{ req.message }}"</p>
-                        </div>
+                        <app-pickup-thread
+                          [interestId]="req.id"
+                          myRole="BUYER"
+                          requesterName="You"
+                          [firstMessage]="req.message"
+                          [pickupAt]="req.pickupAt"
+                          [pickupPlace]="req.pickupPlace"
+                          [replies]="req.replies || []" />
                       </div>
                     </div>
                   </article>

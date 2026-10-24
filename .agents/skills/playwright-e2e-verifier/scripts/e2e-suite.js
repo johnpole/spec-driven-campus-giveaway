@@ -11,7 +11,7 @@ const shotsDir = path.join(ROOT, 'artifacts/screenshots');
 const samplePhoto = path.join(ROOT, 'backend/src/main/resources/seed-images/seed-bike.jpg');
 
 let step = 0;
-const TOTAL = 9;
+const TOTAL = 10;
 function scenario(title) {
   step += 1;
   console.log(`\n▶ [${step}/${TOTAL}] ${title}`);
@@ -135,6 +135,24 @@ async function run() {
     const activity = await page.innerText('body');
     expect(activity.includes(aiFilled ? title.slice(0, 12) : 'E2E test bike'), 'new post listed under My Activity');
     await shot(page, '08-my-activity.png');
+
+    scenario('Request pickup on another item → prefilled, then "Request already sent"');
+    await page.goto(APP, { waitUntil: 'networkidle' });
+    await page.fill('.search-input', 'calculator');
+    await page.waitForTimeout(600);
+    await page.locator('.item-card').first().click();
+    await page.waitForSelector('#open-interest-modal', { timeout: 5000 });
+    await page.click('#open-interest-modal');
+    await page.waitForSelector('#interest-pickup-at');
+    expect((await page.inputValue('#interest-contact')) === user.email, 'contact prefilled from the signed-in account');
+    expect((await page.inputValue('#interest-pickup-place')).length > 0, 'pickup place prefilled from the listing');
+    await page.fill('#interest-pickup-place', 'Union lobby');
+    await page.click('#send-interest-btn');
+    await page.waitForSelector('#request-already-sent', { timeout: 5000 });
+    expect(true, '"Request already sent" replaces "I\'m interested"');
+    await page.reload({ waitUntil: 'networkidle' });
+    expect(!!(await page.waitForSelector('#request-already-sent', { timeout: 5000 })), 'still shown after reload (server remembers)');
+    await shot(page, '09-request-sent.png');
   } finally {
     if (createdPost?.id && createdPost?.editToken) {
       const del = await page.request.delete(`${API}/api/posts/${createdPost.id}`, { headers: { 'X-Edit-Token': createdPost.editToken } });

@@ -18,6 +18,15 @@ public record CreateInterestRequest(
         String visitorContact,
 
         @Size(max = 500, message = "Message cannot exceed 500 characters")
-        String message
+        String message,
+
+        /** When the buyer proposes to pick the item up. */
+        java.time.Instant pickupAt,
+
+        @Size(max = 150, message = "Pickup place cannot exceed 150 characters")
+        String pickupPlace
 ) {
+    public CreateInterestRequest(String visitorName, String visitorContact, String message) {
+        this(visitorName, visitorContact, message, null, null);
+    }
 }

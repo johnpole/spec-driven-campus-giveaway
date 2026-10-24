@@ -39,6 +39,13 @@ public class InterestEntity {
     private String message;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "pickup_at")
+    private Date pickupAt;
+
+    @Column(name = "pickup_place", length = 150)
+    private String pickupPlace;
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
@@ -54,6 +61,8 @@ public class InterestEntity {
         entity.setInquirerUserId(doc.getInquirerUserId());
         entity.setInquirerEmail(doc.getInquirerEmail());
         entity.setMessage(doc.getMessage());
+        entity.pickupAt = doc.getPickupAt();
+        entity.pickupPlace = doc.getPickupPlace();
         entity.setCreatedAt(doc.getCreatedAt() != null ? doc.getCreatedAt() : new Date());
         return entity;
     }
@@ -67,6 +76,8 @@ public class InterestEntity {
         doc.setInquirerUserId(this.inquirerUserId);
         doc.setInquirerEmail(this.inquirerEmail);
         doc.setMessage(this.message);
+        doc.setPickupAt(this.pickupAt);
+        doc.setPickupPlace(this.pickupPlace);
         doc.setCreatedAt(this.createdAt);
         return doc;
     }

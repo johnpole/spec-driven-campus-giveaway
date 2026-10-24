@@ -60,7 +60,7 @@
           @if (item.isFree) {
             <span class="pill-price-free price-lg">FREE</span>
           } @else {
-            <span class="pill-price-paid price-lg">\${{ item.price | number:'1.2-2' }}</span>
+            <span class="pill-price-paid price-lg">${{ item.price | number:'1.2-2' }}</span>
           }
         </div>
       </div>
@@ -172,14 +172,24 @@
           <button type="button" class="btn-primary btn-claimed" disabled>
             Item Has Been Claimed
           </button>
+        } @else if (item.ownedByViewer) {
+          <a routerLink="/my-activity" class="btn-secondary btn-owner-cta" id="manage-own-listing">
+            <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
+            <span>Your listing · see requests in My Activity</span>
+          </a>
+        } @else if (item.requestedByViewer) {
+          <a routerLink="/my-activity" class="btn-primary btn-requested" id="request-already-sent">
+            <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+            <span>Request already sent · view replies</span>
+          </a>
         } @else {
           <button
             type="button"
             class="btn-primary btn-interest-cta"
             (click)="openInterestSheet()"
             id="open-interest-modal">
-            <span class="material-symbols-outlined">send</span>
-            <span>I'm interested</span>
+            <span class="material-symbols-outlined" aria-hidden="true">send</span>
+            <span>{{ authService.isAuthenticated() ? "I'm interested" : 'Sign in to request pickup' }}</span>
           </button>
         }
       </footer>
@@ -201,8 +211,8 @@
       <!-- Sheet Header -->
       <div class="sheet-header">
         <div>
-          <h3 class="sheet-title">Express Interest</h3>
-          <p class="sheet-subtitle">Send a direct handoff note to {{ post()?.posterName }}</p>
+          <h3 class="sheet-title">Request pickup</h3>
+          <p class="sheet-subtitle">Propose a time and place to {{ post()?.posterName }}</p>
         </div>
         <button type="button" class="icon-close-btn" (click)="closeInterestSheet()" aria-label="Close sheet">
           <span class="material-symbols-outlined">close</span>
@@ -247,6 +257,34 @@
           }
         </div>
 
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="interest-pickup-at">Pickup time</label>
+            <input
+              id="interest-pickup-at"
+              type="datetime-local"
+              formControlName="pickupAt"
+              class="form-input"
+              [min]="minPickup"
+              [attr.max]="maxPickup">
+            @if (interestForm.get('pickupAt')?.invalid && interestForm.get('pickupAt')?.touched) {
+              <span class="field-error">Pick a time</span>
+            }
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="interest-pickup-place">Pickup place</label>
+            <input
+              id="interest-pickup-place"
+              type="text"
+              formControlName="pickupPlace"
+              class="form-input"
+              placeholder="e.g. Union lobby">
+            @if (interestForm.get('pickupPlace')?.invalid && interestForm.get('pickupPlace')?.touched) {
+              <span class="field-error">Where should you meet?</span>
+            }
+          </div>
+        </div>
+
         <div class="form-group">
           <label class="form-label" for="interest-message">Message to {{ post()?.posterName }}</label>
           <textarea
@@ -283,7 +321,7 @@
             <span>Sending note...</span>
           } @else {
             <span class="material-symbols-outlined">send</span>
-            <span>Send interest note</span>
+            <span>Send pickup request</span>
           }
         </button>
 

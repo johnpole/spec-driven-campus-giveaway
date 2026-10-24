@@ -72,6 +72,10 @@ export interface PostDetail {
   posterName: string;
   interestCount: number;
   createdAt: string;
+  /** Set for signed-in viewers: they posted this item (so they can't request it). */
+  ownedByViewer?: boolean;
+  /** Set for signed-in viewers: they already sent a request for this item. */
+  requestedByViewer?: boolean;
 }
 
 export interface UpdateStatusRequest {

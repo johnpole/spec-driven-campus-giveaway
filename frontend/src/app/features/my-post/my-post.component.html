@@ -45,7 +45,7 @@
             @if (item.isFree) {
               <span class="pill-price-free thumb-pill">FREE</span>
             } @else {
-              <span class="pill-price-paid thumb-pill">\${{ item.price | number:'1.2-2' }}</span>
+              <span class="pill-price-paid thumb-pill">${{ item.price | number:'1.2-2' }}</span>
             }
           </div>
 

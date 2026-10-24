@@ -17,8 +17,24 @@ public record PostDetailResponse(
         String status,
         String posterName,
         int interestCount,
-        Instant createdAt
+        Instant createdAt,
+        /** True when the signed-in viewer posted this item (they can't request it). */
+        boolean ownedByViewer,
+        /** True when the signed-in viewer already sent a request for this item. */
+        boolean requestedByViewer
 ) {
+    public PostDetailResponse(String id, String title, String description, String category, String condition,
+                              BigDecimal price, boolean isFree, String pickupLocation, Instant availableUntil,
+                              String photoUrl, String status, String posterName, int interestCount, Instant createdAt) {
+        this(id, title, description, category, condition, price, isFree, pickupLocation, availableUntil,
+                photoUrl, status, posterName, interestCount, createdAt, false, false);
+    }
+
+    public PostDetailResponse withViewer(boolean owned, boolean requested) {
+        return new PostDetailResponse(id, title, description, category, condition, price, isFree, pickupLocation,
+                availableUntil, photoUrl, status, posterName, interestCount, createdAt, owned, requested);
+    }
+
     public static PostDetailResponse fromDocument(PostDocument doc) {
         return new PostDetailResponse(
                 doc.getId(),
@@ -34,7 +50,9 @@ public record PostDetailResponse(
                 doc.getStatus(),
                 doc.getPosterName(),
                 doc.getInterestCount() != null ? doc.getInterestCount() : 0,
-                doc.getCreatedAt() != null ? doc.getCreatedAt().toInstant() : null
+                doc.getCreatedAt() != null ? doc.getCreatedAt().toInstant() : null,
+                false,
+                false
         );
     }
 }

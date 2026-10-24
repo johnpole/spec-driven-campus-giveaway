@@ -43,4 +43,9 @@ public class JpaInterestRepository implements InterestRepository {
                 .map(InterestEntity::toDocument)
                 .toList();
     }
+
+    @Override
+    public java.util.Optional<InterestDocument> findById(String id) {
+        return repository.findById(id).map(InterestEntity::toDocument);
+    }
 }

@@ -28,10 +28,13 @@ describe('MyActivityComponent', () => {
       inquiries: [
         {
           id: 'inq-1',
-          inquirerName: 'Sam Freshman',
-          inquirerEmail: 'sam@rpi.edu',
+          visitorName: 'Sam Freshman',
+          visitorContact: 'sam@rpi.edu',
           message: 'Can pick up tomorrow at 5pm!',
-          createdAt: '2026-10-23T13:00:00Z'
+          createdAt: '2026-10-23T13:00:00Z',
+          pickupAt: '2026-10-25T21:00:00Z',
+          pickupPlace: 'Union lobby',
+          replies: []
         }
       ]
     }
@@ -39,15 +42,17 @@ describe('MyActivityComponent', () => {
 
   const mockInterests: UserInquiryItem[] = [
     {
-      interestId: 'inq-2',
+      id: 'inq-2',
       postId: 'post-2',
-      postTitle: 'Desk Lamp',
-      postCategory: 'Dorm essentials',
-      postPrice: 10,
-      postPhotoUrl: 'https://example.com/lamp.jpg',
-      postStatus: 'AVAILABLE',
+      itemTitle: 'Desk Lamp',
+      itemPhotoUrl: 'https://example.com/lamp.jpg',
+      itemStatus: 'AVAILABLE',
       message: 'Still available for pick up?',
-      createdAt: '2026-10-23T14:00:00Z'
+      createdAt: '2026-10-23T14:00:00Z',
+      sellerName: 'Alex Rivera',
+      pickupAt: null,
+      pickupPlace: 'Commons',
+      replies: [{ id: 'r1', authorName: 'Alex Rivera', authorRole: 'SELLER', message: 'Yes! Friday works.', createdAt: '2026-10-23T15:00:00Z' }]
     }
   ];
 
@@ -111,6 +116,8 @@ describe('MyActivityComponent', () => {
     const inquiries = el.querySelectorAll('.inquiry-row');
     expect(inquiries.length).toBe(1);
     expect(inquiries[0].textContent).toContain('Sam Freshman');
+    expect(inquiries[0].textContent).toContain('sam@rpi.edu');
+    expect(inquiries[0].textContent).toContain('Union lobby');
     expect(inquiries[0].textContent).toContain('Can pick up tomorrow');
   });
 
@@ -127,7 +134,11 @@ describe('MyActivityComponent', () => {
     const reqTitles = el.querySelectorAll('.req-title');
     expect(reqTitles.length).toBe(1);
     expect(reqTitles[0].textContent).toContain('Desk Lamp');
-    expect(el.querySelector('.note-text')?.textContent).toContain('Still available for pick up?');
+    const card = el.querySelector('.request-card')?.textContent ?? '';
+    expect(card).toContain('Still available for pick up?');
+    expect(card).toContain('From Alex Rivera');
+    expect(card).toContain('Yes! Friday works.');
+    expect(card).toContain('Commons');
   });
 
   it('should mark post as taken when action button is clicked', () => {

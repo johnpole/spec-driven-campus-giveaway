@@ -30,6 +30,9 @@ class PostControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
+    private edu.rpi.giveaway.interest.InterestService interestService;
+
+    @MockBean
     private PostService postService;
 
     @Test
