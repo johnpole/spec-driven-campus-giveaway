@@ -1,0 +1,272 @@
+/* ==========================================================================
+   Campus Giveaway — Mobile-First Design System (DESIGN.md tokens)
+   ========================================================================== */
+
+:root {
+  /* Color Tokens */
+  --color-primary: #D6001C;
+  --color-primary-dark: #B30017;
+  --color-primary-soft: #FDE8EA;
+  --color-secondary: #1F2328;
+  --color-secondary-muted: #656D76;
+  --color-border-hairline: #E8E5DF;
+  --color-tertiary-green: #2E9E5B;
+  --color-tertiary-soft: #EAF7EE;
+  --color-tertiary-border: #A7F3D0;
+  --color-canvas: #FAF8F5;
+  --color-surface: #FFFFFF;
+  --color-status-amber: #D97706;
+  --color-status-amber-bg: #FEF3C7;
+  --color-status-amber-border: #FDE68A;
+  --color-status-red: #D6001C;
+  --color-status-red-bg: #FEE2E2;
+  --color-status-red-border: #FECACA;
+
+  /* Typography */
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-base: 14px;
+  --radius-pill: 9999px;
+  --radius-sheet: 24px;
+
+  /* Elevations */
+  --shadow-card: 0 2px 8px -2px rgba(31, 35, 40, 0.05);
+  --shadow-floating: 0 12px 32px -4px rgba(31, 35, 40, 0.16);
+  --shadow-sheet: 0 16px 40px -6px rgba(31, 35, 40, 0.22);
+
+  /* Layout Bounds */
+  --app-max-width: 480px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --app-max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --app-max-width: 1120px;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--color-canvas);
+  color: var(--color-secondary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Touch Ergonomics: Ensure interactive elements meet >= 48px touch targets */
+button, a, input, select, textarea, label.interactive {
+  touch-action: manipulation;
+}
+
+/* App viewport container centered on desktop/tablets, fluid 360-430px base on mobile */
+.app-viewport {
+  max-width: var(--app-max-width);
+  min-height: 100dvh;
+  margin: 0 auto;
+  background-color: var(--color-canvas);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.04);
+}
+
+/* Base Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-secondary);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Common UI Elements */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  padding: 0 var(--space-md);
+  text-decoration: none;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+
+  &:active {
+    background-color: var(--color-primary-dark);
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  background-color: var(--color-surface);
+  color: var(--color-secondary);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid var(--color-border-hairline);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  padding: 0 var(--space-md);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+
+  &:active {
+    background-color: var(--color-canvas);
+  }
+}
+
+/* Price Pills */
+.pill-price-free {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background-color: var(--color-tertiary-green);
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.02em;
+}
+
+.pill-price-paid {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background-color: var(--color-secondary);
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  border-radius: var(--radius-pill);
+}
+
+/* Category & Metadata Chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-hairline);
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-secondary-muted);
+}
+
+/* Form Controls (>= 50px min-height, 16px text to prevent mobile browser auto-zoom) */
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  min-height: 50px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-hairline);
+  border-radius: var(--radius-base);
+  padding: 12px var(--space-md);
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-secondary);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-soft);
+  }
+
+  &::placeholder {
+    color: #9CA3AF;
+  }
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: 6px;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: calc(100% - 32px);
+  max-width: 440px;
+  pointer-events: none;
+}
+
+.toast {
+  background-color: var(--color-secondary);
+  color: #FFFFFF;
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sheet);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toastFadeIn 0.25s ease-out;
+}
+
+@keyframes toastFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

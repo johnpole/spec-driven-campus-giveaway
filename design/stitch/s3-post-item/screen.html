@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-fixed-variant": "#930010", "surface-container-low": "#f5f3f0", "on-primary": "#ffffff", "surface-container-lowest": "#ffffff", "outline": "#926e6b", "on-error-container": "#93000a", "on-secondary-container": "#5f6369", "on-surface": "#1b1c1a", "on-secondary": "#ffffff", "secondary-fixed-dim": "#c3c6cd", "outline-variant": "#e7bcb8", "surface-dim": "#dbdad7", "primary": "#a80013", "surface-container": "#efeeeb", "primary-fixed": "#ffdad6", "on-tertiary-container": "#a1ffb9", "inverse-primary": "#ffb3ac", "tertiary-container": "#007a3f", "tertiary-fixed": "#8df9ac", "on-secondary-fixed-variant": "#43474d", "error": "#ba1a1a", "on-error": "#ffffff", "secondary-fixed": "#e0e2e9", "on-tertiary": "#ffffff", "surface": "#fbf9f6", "inverse-on-surface": "#f2f0ed", "surface-container-high": "#eae8e5", "tertiary": "#005f30", "background": "#fbf9f6", "surface-bright": "#fbf9f6", "tertiary-fixed-dim": "#71dc92", "on-tertiary-fixed": "#00210d", "surface-tint": "#c00018", "secondary": "#5b5f64", "on-primary-container": "#ffe6e3", "primary-fixed-dim": "#ffb3ac", "on-background": "#1b1c1a", "primary-container": "#d6001c", "on-secondary-fixed": "#181c21", "inverse-surface": "#30312f", "on-primary-fixed": "#410003", "on-tertiary-fixed-variant": "#005229", "surface-container-highest": "#e4e2df", "on-surface-variant": "#5e3f3c", "surface-variant": "#e4e2df", "error-container": "#ffdad6", "secondary-container": "#dde0e6" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "gutter-desktop": "1.5rem", "space-sm": "0.5rem", "margin-desktop": "2rem", "space-xs": "0.25rem", "margin": "1rem", "space-md": "1rem", "space-xl": "2rem", "space-lg": "1.5rem", "gutter": "1rem" }, fontFamily: { "title-xl-mobile": ["Plus Jakarta Sans"], "micro": ["Inter"], "label-regular": ["Inter"], "title-md": ["Plus Jakarta Sans"], "label-meta": ["Plus Jakarta Sans"], "body-regular": ["Inter"], "title-xl": ["Plus Jakarta Sans"], "title-lg": ["Plus Jakarta Sans"], "body-medium": ["Inter"] }, fontSize: { "title-xl-mobile": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "micro": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }], "label-regular": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "label-meta": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "body-regular": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "title-xl": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-lg": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-medium": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "500" }] } } } };</script><style>@layer base { .pb-safe { padding-bottom: max(env(safe-area-inset-bottom, 16px), 16px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-regular min-h-full flex flex-col antialiased selection:bg-primary-fixed"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><button aria-label="Go back or close" class="w-10 h-10 -ml-1 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[24px]">close</span></button><div class="flex items-center gap-2 min-w-0"><h1 class="font-title-md text-title-md text-on-surface truncate leading-tight">Post an item</h1><span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide bg-surface-container-high text-secondary">Draft</span></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Notifications" class="w-10 h-10 flex items-center justify-center rounded-full text-secondary hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span></button><a class="w-10 h-10 flex items-center justify-center" data-path="campus-giveaway-profile" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_-2px_rgba(31,35,40,0.08)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB291nlyi-9VPViUeF-5FJY0brNYF2Hdm8dDB6wKKyOjS_zcLxD2oqfSjzu91n8H1epbjsNx7m_O4JUrgAnV29z7dTvd3OfnLBcwiqdejW4K3ywqJx2ieTRgr-FWcbi6s6sZw9pzI-zkgQNRsq_t3EvOCSb2uZepd6cTCLE0wtPznsWfiFYL5aTokAzeaDMcXYW2cehOUFu-BeBBojheWMz8y8nZOOMVDxHK1CpEo549zbteyGpt2LgA"/></a></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-28 px-margin bg-surface"><div class="flex flex-col w-full pb-8">
+<!-- Progress Header -->
+<div class="flex flex-col gap-2 pt-2 pb-4">
+<div class="flex items-center justify-between">
+<span class="font-label-meta text-label-meta text-primary font-bold">Step 1 of 2</span>
+<span class="font-micro text-micro text-secondary">Next: Quick review</span>
+</div>
+<div class="w-full flex items-center gap-1.5 h-1.5">
+<div class="h-full flex-1 rounded-full bg-primary-container shadow-[0_1px_3px_rgba(214,0,28,0.25)]"></div>
+<div class="h-full flex-1 rounded-full bg-surface-container-highest"></div>
+</div>
+<div class="flex items-center justify-between mt-1">
+<h2 class="font-title-md text-title-md text-on-surface">Listing details</h2>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-container/15 text-tertiary font-micro text-micro font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">eco</span>
+        Zero waste
+      </span>
+</div>
+</div>
+<!-- Photo Upload Section -->
+<div class="flex flex-col gap-3 mb-6">
+<div class="flex items-center justify-between">
+<label class="font-label-meta text-label-meta text-on-surface flex items-center gap-1.5">
+        Photos
+        <span class="text-secondary font-normal font-micro text-micro">(Up to 4)</span>
+</label>
+<span class="font-micro text-micro text-tertiary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">tips_and_updates</span>
+        Bright dorm light works best
+      </span>
+</div>
+<!-- Media Row: Primary Shot + Captured Thumbnails -->
+<div class="grid grid-cols-3 gap-2.5">
+<!-- Attached Image 1 (Preview) -->
+<div class="relative col-span-1 aspect-square rounded-xl overflow-hidden shadow-sm bg-surface-container group">
+<img class="w-full h-full object-cover" data-alt="A warm cozy college dorm room corner with a wooden study desk, minimalist desk lamp, and a potted succulent under golden morning window light, realistic mobile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzv60AcHU-u0SqMzSmQ0iwSU9KDaKVxv79tWTWTiEdPSeo8CP7RdF2YqOuQDriPav1aHZBAEQd3EUE7bPRcYYNsuphhPL6qGRtmmAvuE5nXv8ocaOJKliCerKfb8CMMALnvqvxGmKenYr_Onj28ICYx2tyL6NEOIYJ8Iz3TayYsq7KPcOm1kis3aYCo6FP4Vm2-Jt9g0y4e5U0xnmCT4BbdvUstvYZtw6Hylr5g48UmyMKBrrgJpehfQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+<button aria-label="Remove photo" class="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-surface/90 text-on-surface flex items-center justify-center shadow-md hover:bg-surface active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+<span class="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/60 text-surface-container-lowest font-micro text-[10px] font-medium tracking-wide">Cover</span>
+</div>
+<!-- Add photo trigger button -->
+<label class="col-span-2 aspect-[2/1] sm:aspect-square flex flex-col items-center justify-center rounded-xl bg-surface-container-low hover:bg-surface-container active:scale-[0.99] transition-all cursor-pointer p-3 text-center shadow-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest text-primary flex items-center justify-center mb-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[22px]">add_a_photo</span>
+</div>
+<span class="font-label-meta text-label-meta text-on-surface leading-tight">Add more photos</span>
+<span class="font-micro text-micro text-secondary mt-0.5">Camera or gallery</span>
+<input accept="image/*" class="sr-only" multiple="" type="file"/>
+</label>
+</div>
+</div>
+<!-- Form Section 1: Item Details -->
+<div class="flex flex-col gap-5">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+<h3 class="font-title-md text-title-md text-on-surface">The item</h3>
+</div>
+<!-- Title with Validation Error -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-meta text-label-meta text-on-surface" for="item-title">Item title <span class="text-primary">*</span></label>
+<span class="font-micro text-micro text-error font-medium">Required</span>
+</div>
+<div class="relative flex items-center">
+<!-- Error outline & warm tint -->
+<input aria-describedby="title-error-msg" aria-invalid="true" class="w-full min-h-[50px] px-3.5 pr-11 rounded-xl bg-error-container/20 text-on-surface placeholder:text-secondary/70 font-body-regular text-body-regular shadow-[0_0_0_2px_#ba1a1a] focus:outline-none transition-shadow" id="item-title" placeholder="e.g., IKEA Linnmon desk, Twin XL mattress topper" type="text" value=""/>
+<div class="absolute right-3.5 flex items-center pointer-events-none text-error">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+</div>
+<!-- Inline Error Message -->
+<div class="flex items-start gap-1.5 pt-1 text-error" id="title-error-msg">
+<span class="material-symbols-outlined text-[16px] mt-0.5 flex-shrink-0">warning</span>
+<p class="font-micro text-micro leading-snug font-medium">
+          Please enter a title for your item so nearby students can find it.
+        </p>
+</div>
+</div>
+<!-- Category Trigger -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-meta text-label-meta text-on-surface" for="category-trigger">Category <span class="text-primary">*</span></label>
+<button class="w-full min-h-[50px] px-3.5 rounded-xl bg-surface-container-lowest text-on-surface flex items-center justify-between shadow-sm active:bg-surface-container-low transition-colors" id="category-trigger" type="button">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">chair</span>
+</div>
+<span class="font-body-regular text-body-regular font-medium">Furniture &amp; Storage</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-[22px]">expand_more</span>
+</button>
+</div>
+<!-- Condition Segmented Control -->
+<div class="flex flex-col gap-2">
+<label class="font-label-meta text-label-meta text-on-surface">Condition <span class="text-primary">*</span></label>
+<div class="grid grid-cols-3 gap-2 bg-surface-container-low p-1.5 rounded-2xl shadow-inner">
+<!-- Like New Option -->
+<button class="min-h-[44px] px-2 rounded-xl flex items-center justify-center font-label-meta text-label-meta transition-all bg-surface-container-lowest text-on-surface shadow-sm font-semibold" type="button">
+          Like new
+        </button>
+<!-- Good Option -->
+<button class="min-h-[44px] px-2 rounded-xl flex items-center justify-center font-label-meta text-label-meta transition-all text-secondary hover:text-on-surface" type="button">
+          Good
+        </button>
+<!-- Fair Option -->
+<button class="min-h-[44px] px-2 rounded-xl flex items-center justify-center font-label-meta text-label-meta transition-all text-secondary hover:text-on-surface" type="button">
+          Fair
+        </button>
+</div>
+</div>
+<!-- Price & "It's Free" Card -->
+<div class="p-4 rounded-2xl bg-surface-container-lowest shadow-sm flex flex-col gap-3.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-label-meta text-label-meta text-on-surface">Price</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-tertiary-container/15 text-tertiary font-micro text-micro font-bold">
+            Campus favorite
+          </span>
+</div>
+<!-- "It's Free" Toggle -->
+<label class="flex items-center gap-2.5 cursor-pointer">
+<span class="font-label-meta text-label-meta text-on-surface select-none font-semibold">It's free</span>
+<div class="relative">
+<input checked="" class="sr-only peer" id="free-toggle" type="checkbox"/>
+<div class="w-12 h-7 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface peer-checked:bg-tertiary-container after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-surface-container-lowest after:rounded-full after:h-6 after:w-6 after:transition-all after:shadow-sm"></div>
+</div>
+</label>
+</div>
+<!-- Currency input row -->
+<div class="relative flex items-center opacity-50 transition-opacity" id="price-input-wrapper">
+<span class="absolute left-3.5 text-secondary font-body-medium text-body-medium font-semibold">$</span>
+<input class="w-full min-h-[50px] pl-8 pr-3.5 rounded-xl bg-surface-container text-on-surface font-body-regular text-body-regular disabled:cursor-not-allowed shadow-none" disabled="" id="item-price" inputmode="decimal" placeholder="0.00" type="number" value="0"/>
+</div>
+<!-- Helpful Eco Callout -->
+<div class="flex items-center gap-2 p-2.5 rounded-xl bg-tertiary-container/10 text-tertiary">
+<span class="material-symbols-outlined text-[20px] flex-shrink-0" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<p class="font-micro text-micro font-medium leading-tight">
+          Items marked free get claimed 4x faster by campus neighbors.
+        </p>
+</div>
+</div>
+<!-- Description -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-meta text-label-meta text-on-surface" for="item-description">Description</label>
+<span class="font-micro text-micro text-secondary">Optional</span>
+</div>
+<textarea class="w-full p-3.5 rounded-xl bg-surface-container-lowest text-on-surface placeholder:text-secondary/70 font-body-regular text-body-regular shadow-sm focus:outline-none focus:shadow-[0_0_0_2px_#d6001c] transition-shadow resize-none" id="item-description" placeholder="Mention dimensions, condition flaws, or if you can help carry it downstairs..." rows="3"></textarea>
+</div>
+<!-- Pickup Location -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-meta text-label-meta text-on-surface" for="item-location">Pickup location <span class="text-primary">*</span></label>
+<div class="relative flex items-center">
+<div class="absolute left-3.5 text-primary flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+</div>
+<input class="w-full min-h-[50px] pl-10 pr-3.5 rounded-xl bg-surface-container-lowest text-on-surface placeholder:text-secondary/70 font-body-regular text-body-regular shadow-sm focus:outline-none focus:shadow-[0_0_0_2px_#d6001c] transition-shadow" id="item-location" placeholder="e.g., Quad lobby, Barton Hall, Student Union" type="text"/>
+</div>
+<div class="flex items-center gap-1.5 flex-wrap pt-1">
+<span class="font-micro text-micro text-secondary">Common spots:</span>
+<button class="px-2 py-0.5 rounded-full bg-surface-container font-micro text-micro text-on-surface hover:bg-surface-container-high transition-colors" type="button">Barton Hall</button>
+<button class="px-2 py-0.5 rounded-full bg-surface-container font-micro text-micro text-on-surface hover:bg-surface-container-high transition-colors" type="button">North Campus Quad</button>
+</div>
+</div>
+<!-- Available Until Deadline -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-meta text-label-meta text-on-surface" for="item-deadline">Available until (Move-out deadline) <span class="text-primary">*</span></label>
+<span class="inline-flex items-center gap-1 text-primary-container font-micro text-micro font-bold">
+<span class="material-symbols-outlined text-[13px]">alarm</span> Urgency
+        </span>
+</div>
+<div class="relative flex items-center">
+<div class="absolute left-3.5 text-secondary flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</div>
+<input class="w-full min-h-[50px] pl-10 pr-3.5 rounded-xl bg-surface-container-lowest text-on-surface font-body-regular text-body-regular shadow-sm focus:outline-none focus:shadow-[0_0_0_2px_#d6001c] transition-shadow" id="item-deadline" type="date" value="2025-05-20"/>
+</div>
+<p class="font-micro text-micro text-secondary px-0.5">
+        Listing automatically closes after this date to save you notification clutter.
+      </p>
+</div>
+</div>
+<!-- Section 2: About You (Contact & Trust) -->
+<div class="flex flex-col gap-4 mt-8 pt-6 border-t-0 bg-surface-container-low p-4 rounded-2xl shadow-sm">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-surface-container-lowest text-secondary flex items-center justify-center shadow-xs">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface leading-none">About you</h3>
+<span class="font-micro text-micro text-secondary">Visible only on confirmed pickup</span>
+</div>
+</div>
+<!-- Your Name -->
+<div class="flex flex-col gap-1">
+<label class="font-label-meta text-label-meta text-on-surface" for="contact-name">Your name</label>
+<input class="w-full min-h-[50px] px-3.5 rounded-xl bg-surface-container-lowest text-on-surface font-body-regular text-body-regular shadow-sm focus:outline-none focus:shadow-[0_0_0_2px_#d6001c] transition-shadow" id="contact-name" type="text" value="Priya Sharma"/>
+</div>
+<!-- Campus Email / Mobile -->
+<div class="flex flex-col gap-1">
+<label class="font-label-meta text-label-meta text-on-surface" for="contact-channel">Campus email or phone</label>
+<input class="w-full min-h-[50px] px-3.5 rounded-xl bg-surface-container-lowest text-on-surface font-body-regular text-body-regular shadow-sm focus:outline-none focus:shadow-[0_0_0_2px_#d6001c] transition-shadow" id="contact-channel" inputmode="email" placeholder="student@campus.edu or mobile number" type="email" value="priya.s@cornell.edu"/>
+<div class="flex items-center gap-1.5 mt-1 text-secondary px-0.5">
+<span class="material-symbols-outlined text-[15px] flex-shrink-0">lock</span>
+<span class="font-micro text-micro leading-tight">Only shown to people who express interest. Never posted publicly.</span>
+</div>
+</div>
+<!-- Legal / Safety Checkbox -->
+<label class="flex items-start gap-3 pt-2 cursor-pointer select-none">
+<div class="relative flex items-center mt-0.5">
+<input checked="" class="peer sr-only" id="safety-check" type="checkbox"/>
+<div class="w-5 h-5 rounded-md bg-surface-container-lowest peer-checked:bg-primary-container flex items-center justify-center shadow-xs transition-colors">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold">check</span>
+</div>
+</div>
+<span class="font-label-regular text-label-regular text-on-surface font-medium leading-snug">
+        This item is legal, safe, and mine to give.
+      </span>
+</label>
+</div>
+<!-- Sticky Bottom Submission Bar -->
+<div class="sticky bottom-16 -mx-margin px-margin pt-3 pb-4 mt-6 bg-surface/95 backdrop-blur-xl shadow-[0_-8px_24px_rgba(31,35,40,0.08)] z-40">
+<button class="w-full min-h-[52px] rounded-[14px] bg-primary-container text-on-primary font-title-md text-title-md flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(214,0,28,0.35)] hover:bg-primary active:scale-[0.98] transition-all" id="submit-post-btn" type="button">
+<span>Post item</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<p class="font-micro text-micro text-secondary text-center mt-2.5">
+      Campus safe exchange rules apply · 100% free to post
+    </p>
+</div>
+</div>
+<script>
+  // Simple interactive toggle for Free / Price switch
+  (function() {
+    const freeToggle = document.getElementById('free-toggle');
+    const priceWrapper = document.getElementById('price-input-wrapper');
+    const priceInput = document.getElementById('item-price');
+
+    if (freeToggle && priceWrapper && priceInput) {
+      freeToggle.addEventListener('change', function() {
+        if (this.checked) {
+          priceWrapper.classList.add('opacity-50');
+          priceInput.setAttribute('disabled', 'disabled');
+          priceInput.value = '0';
+        } else {
+          priceWrapper.classList.remove('opacity-50');
+          priceInput.removeAttribute('disabled');
+          priceInput.focus();
+        }
+      });
+    }
+
+    // Interactive segment condition control
+    const conditionButtons = document.querySelectorAll('.grid-cols-3 button');
+    conditionButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        conditionButtons.forEach(b => {
+          b.className = 'min-h-[44px] px-2 rounded-xl flex items-center justify-center font-label-meta text-label-meta transition-all text-secondary hover:text-on-surface';
+        });
+        btn.className = 'min-h-[44px] px-2 rounded-xl flex items-center justify-center font-label-meta text-label-meta transition-all bg-surface-container-lowest text-on-surface shadow-sm font-semibold';
+      });
+    });
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_20px_-2px_rgba(31,35,40,0.06)]" data-active-classes="text-primary font-title-md"><div class="h-16 px-margin flex items-center justify-around"><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] px-space-xs text-secondary hover:text-on-surface transition-colors group" data-path="campus-giveaway-home-feed" href="#"><span class="material-symbols-outlined text-[24px]">explore</span><span class="font-micro text-micro mt-0.5">Browse</span></a><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] px-space-xs text-primary transition-colors group" data-path="campus-giveaway-post" href="#"><div class="w-9 h-9 rounded-xl bg-primary-container text-on-primary flex items-center justify-center shadow-[0_2px_8px_rgba(214,0,28,0.3)] ring-2 ring-primary-container ring-offset-2 ring-offset-surface"><span class="material-symbols-outlined text-[22px]">add</span></div><span class="font-micro text-micro mt-0.5 font-bold text-primary">Post</span></a><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] px-space-xs text-secondary hover:text-on-surface transition-colors group" data-path="campus-giveaway-my-items" href="#"><span class="material-symbols-outlined text-[24px]">inventory_2</span><span class="font-micro text-micro mt-0.5">My items</span></a></div></nav></body></html>

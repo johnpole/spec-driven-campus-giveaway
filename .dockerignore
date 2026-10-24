@@ -1,0 +1,9 @@
+.git
+.gitignore
+.gemini
+**/node_modules
+**/target
+**/.angular
+frontend/dist
+design/stitch/**/*.png
+*.md

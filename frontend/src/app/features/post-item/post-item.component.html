@@ -1,0 +1,225 @@
+<div class="post-page">
+  <header class="post-header">
+    <a routerLink="/" class="icon-btn" aria-label="Cancel and go back to the feed">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </a>
+    <h1 class="post-title-text">Pass it on</h1>
+    <span class="eco-badge">
+      <span class="material-symbols-outlined" aria-hidden="true">eco</span>
+      Zero waste
+    </span>
+  </header>
+
+  @if (createdPost(); as result) {
+    <main class="success-screen" aria-live="polite">
+      <div class="success-burst" aria-hidden="true">
+        <span class="material-symbols-outlined">celebration</span>
+      </div>
+      <h2>Your item is live!</h2>
+      <p>Students across campus can see it now. You'll find interest requests in <strong>My Activity</strong>.</p>
+      <div class="success-actions">
+        <a [routerLink]="['/items', result.id]" class="btn-primary">View listing</a>
+        <a routerLink="/my-activity" class="btn-secondary">Go to My Activity</a>
+        <a routerLink="/" class="text-link">Back to the feed</a>
+      </div>
+    </main>
+  } @else {
+    <main class="post-content">
+      <ol class="stepper" aria-label="Posting steps">
+        <li [class.active]="stepNumber() === 1" [class.done]="stepNumber() > 1">
+          <span class="dot">{{ stepNumber() > 1 ? '✓' : '1' }}</span> Sign in
+        </li>
+        <li [class.active]="stepNumber() === 2" [class.done]="stepNumber() > 2">
+          <span class="dot">{{ stepNumber() > 2 ? '✓' : '2' }}</span> Photo
+        </li>
+        <li [class.active]="stepNumber() === 3">
+          <span class="dot">3</span> Review &amp; post
+        </li>
+      </ol>
+
+      @switch (step()) {
+        @case ('signin') {
+          <section class="card gate-card" aria-labelledby="gate-title">
+            <span class="material-symbols-outlined gate-icon" aria-hidden="true">lock_person</span>
+            <h2 id="gate-title">Sign in to post</h2>
+            <p>One quick account keeps the board safe for everyone. Your email stays private.</p>
+            <button type="button" class="btn-primary" id="post-signin-btn" (click)="openSignIn()">
+              Sign in or create account
+            </button>
+          </section>
+        }
+
+        @case ('photo') {
+          <section class="card photo-card" aria-labelledby="photo-title">
+            <h2 id="photo-title">Snap your item</h2>
+            <p class="muted">Bright light, whole item in frame. Gemini will fill in the rest.</p>
+
+            @if (uploadError()) {
+              <div class="alert alert-error" role="alert">
+                <span class="material-symbols-outlined" aria-hidden="true">error</span>
+                {{ uploadError() }}
+              </div>
+            }
+
+            @if (photoPreview()) {
+              <div class="photo-preview">
+                <img [src]="photoPreview()" alt="Your item photo" />
+                <div class="ai-scan" aria-live="polite">
+                  <span class="scan-line" aria-hidden="true"></span>
+                  <span class="scan-label">
+                    <span class="material-symbols-outlined" aria-hidden="true">auto_awesome</span>
+                    {{ isUploadingPhoto() ? 'Uploading photo…' : 'Gemini is reading your photo…' }}
+                  </span>
+                </div>
+              </div>
+            } @else {
+              <label class="photo-drop" for="photo-input">
+                <span class="material-symbols-outlined drop-icon" aria-hidden="true">photo_camera</span>
+                <span class="drop-title">Take a photo</span>
+                <span class="drop-sub">or choose one from your gallery</span>
+              </label>
+              <input
+                id="photo-input"
+                class="visually-hidden"
+                type="file"
+                accept="image/*"
+                capture="environment"
+                appCameraCapture
+                (photoCaptured)="onPhotoCaptured($event)"
+                (captureError)="onCaptureError($event)" />
+            }
+
+            <div class="ai-flag">
+              <span class="material-symbols-outlined" aria-hidden="true">auto_awesome</span>
+              <span>AI auto-fill by Gemini is <strong>{{ autofillEnabled() ? 'on' : 'off' }}</strong></span>
+              @if (authService.isAdmin()) {
+                <button type="button" class="chip-btn" (click)="toggleAutofill()">
+                  {{ autofillEnabled() ? 'Turn off' : 'Turn on' }}
+                </button>
+              }
+            </div>
+          </section>
+        }
+
+        @case ('review') {
+          <form class="review" [formGroup]="postForm" (ngSubmit)="submitPost()" id="post-form" novalidate>
+            <div class="review-photo">
+              <img [src]="photoPreview()" alt="Your item photo" />
+              <button type="button" class="chip-btn retake" (click)="retakePhoto()">
+                <span class="material-symbols-outlined" aria-hidden="true">photo_camera</span> Retake
+              </button>
+            </div>
+
+            @if (aiMessage()) {
+              <div class="alert" [class.alert-ai]="aiFilled()" [class.alert-warn]="!aiFilled()" role="status" id="ai-message">
+                <span class="material-symbols-outlined" aria-hidden="true">{{ aiFilled() ? 'auto_awesome' : 'info' }}</span>
+                {{ aiMessage() }}
+              </div>
+            }
+
+            @if (submitError()) {
+              <div class="alert alert-error" role="alert">{{ submitError() }}</div>
+            }
+
+            <div class="card fields">
+              <div class="field">
+                <label for="post-title">What is it? @if (aiFilled()) {<span class="ai-tag">✨ AI</span>}</label>
+                <input id="post-title" type="text" formControlName="title" maxlength="100" placeholder="e.g. IKEA desk lamp" />
+                @if (postForm.get('title')?.touched && postForm.get('title')?.invalid) {
+                  <span class="field-error">Give your item a title.</span>
+                }
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="post-category">Category @if (aiFilled()) {<span class="ai-tag">✨ AI</span>}</label>
+                  <select id="post-category" formControlName="category">
+                    @for (c of categories; track c) {
+                      <option [value]="c">{{ c }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="field">
+                  <span class="label" id="condition-label">Condition</span>
+                  <div class="segmented" role="radiogroup" aria-labelledby="condition-label">
+                    @for (c of conditions; track c.value) {
+                      <button
+                        type="button"
+                        role="radio"
+                        [attr.aria-checked]="postForm.get('condition')?.value === c.value"
+                        [class.selected]="postForm.get('condition')?.value === c.value"
+                        (click)="setCondition(c.value)">
+                        {{ c.label }}
+                      </button>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="post-description">Description @if (aiFilled()) {<span class="ai-tag">✨ AI</span>}</label>
+                <textarea id="post-description" rows="4" formControlName="description" maxlength="1000"></textarea>
+                @if (postForm.get('description')?.touched && postForm.get('description')?.invalid) {
+                  <span class="field-error">Add a short description.</span>
+                }
+              </div>
+
+              <div class="field price-field">
+                <label class="switch">
+                  <input type="checkbox" id="free-toggle" formControlName="isFree" />
+                  <span class="switch-track" aria-hidden="true"></span>
+                  It's free
+                </label>
+                @if (!postForm.get('isFree')?.value) {
+                  <div class="price-input">
+                    <span aria-hidden="true">$</span>
+                    <input id="post-price" type="number" inputmode="decimal" min="0" formControlName="price" aria-label="Price in dollars" />
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="card fields">
+              <div class="field">
+                <label for="post-location">Pickup spot</label>
+                <input id="post-location" type="text" formControlName="pickupLocation" placeholder="e.g. Union, 2nd floor" />
+                <div class="spots" aria-label="Popular campus spots">
+                  @for (spot of campusSpots; track spot) {
+                    <button type="button" class="spot-chip" [class.selected]="postForm.get('pickupLocation')?.value === spot" (click)="setSpot(spot)">
+                      {{ spot }}
+                    </button>
+                  }
+                </div>
+                @if (postForm.get('pickupLocation')?.touched && postForm.get('pickupLocation')?.invalid) {
+                  <span class="field-error">Where should people pick it up?</span>
+                }
+              </div>
+
+              <div class="field">
+                <label for="post-deadline">Available until</label>
+                <input id="post-deadline" type="date" formControlName="availableUntil" [min]="minDate" />
+              </div>
+
+              <p class="posting-as">
+                <span class="material-symbols-outlined" aria-hidden="true">verified_user</span>
+                <span>Posting as <strong>{{ authService.currentUser()?.name }}</strong>. Your email is never shown publicly.</span>
+              </p>
+
+              <label class="check">
+                <input type="checkbox" id="legal-check" formControlName="legalConfirmed" />
+                This item is legal, safe, and mine to give.
+              </label>
+            </div>
+
+            <div class="submit-bar">
+              <button type="submit" class="btn-primary btn-block" id="submit-post-btn" [disabled]="isSubmitting() || postForm.invalid">
+                <span class="material-symbols-outlined" aria-hidden="true">publish</span>
+                {{ isSubmitting() ? 'Posting…' : 'Post item' }}
+              </button>
+            </div>
+          </form>
+        }
+      }
+    </main>
+  }
+</div>

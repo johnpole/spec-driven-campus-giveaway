@@ -1,0 +1,243 @@
+<div class="my-post-page">
+  <!-- Top Header -->
+  <header class="page-header">
+    <a routerLink="/" class="icon-back" aria-label="Back to browse">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </a>
+    <div>
+      <h1 class="header-title">Post Management</h1>
+      <span class="header-subtitle">Private Poster Dashboard</span>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <!-- Notice Banner -->
+    @if (actionNotice()) {
+      <div class="notice-banner">
+        <span class="material-symbols-outlined notice-icon">check_circle</span>
+        <span>{{ actionNotice() }}</span>
+      </div>
+    }
+
+    <!-- Error Banner -->
+    @if (error()) {
+      <div class="error-banner">
+        <span class="material-symbols-outlined">error</span>
+        <span>{{ error() }}</span>
+      </div>
+    }
+
+    <!-- Loading State -->
+    @if (loading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading your post and inquiries...</p>
+      </div>
+    }
+
+    <!-- Active Managed Post View -->
+    @if (!loading() && post(); as item) {
+      <!-- Item Summary Card -->
+      <section class="item-summary-card">
+        <div class="item-summary-row">
+          <div class="thumb-container">
+            <img [src]="item.photoUrl" [alt]="item.title" class="thumb-img">
+            @if (item.isFree) {
+              <span class="pill-price-free thumb-pill">FREE</span>
+            } @else {
+              <span class="pill-price-paid thumb-pill">\${{ item.price | number:'1.2-2' }}</span>
+            }
+          </div>
+
+          <div class="summary-details">
+            <div class="category-status-row">
+              <span class="cat-badge">{{ item.category }}</span>
+              <span class="status-pill" [class.claimed]="item.status === 'CLAIMED'">
+                {{ item.status }}
+              </span>
+            </div>
+            <h2 class="summary-title">{{ item.title }}</h2>
+            <p class="summary-location">
+              <span class="material-symbols-outlined pin-icon">location_on</span>
+              <span>{{ item.pickupLocation }}</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Management Actions -->
+        <div class="summary-actions">
+          <button
+            type="button"
+            class="btn-toggle-status"
+            [class.reopen]="item.status === 'CLAIMED'"
+            (click)="toggleClaimed()"
+            [disabled]="isUpdatingStatus()"
+            id="toggle-claimed-btn">
+            <span class="material-symbols-outlined">
+              {{ item.status === 'CLAIMED' ? 'replay' : 'check_circle' }}
+            </span>
+            <span>
+              {{ item.status === 'CLAIMED' ? 'Mark Available Again' : 'Mark as Claimed' }}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            class="btn-delete"
+            (click)="promptDelete()"
+            [disabled]="isDeleting()"
+            id="delete-post-btn">
+            <span class="material-symbols-outlined">delete_outline</span>
+            <span>Delete</span>
+          </button>
+        </div>
+
+        <!-- Delete Confirmation Modal / Prompt -->
+        @if (showDeleteConfirm()) {
+          <div class="delete-confirm-box">
+            <p class="confirm-warning">
+              Are you sure you want to permanently delete this listing? This action cannot be undone.
+            </p>
+            <div class="confirm-actions">
+              <button
+                type="button"
+                class="btn-danger-confirm"
+                (click)="confirmDelete()"
+                [disabled]="isDeleting()"
+                id="confirm-delete-btn">
+                {{ isDeleting() ? 'Deleting...' : 'Yes, Delete' }}
+              </button>
+              <button
+                type="button"
+                class="btn-cancel"
+                (click)="cancelDelete()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        }
+      </section>
+
+      <!-- Interested Inquiries Section -->
+      <section class="inquiries-section">
+        <div class="inquiries-header">
+          <div class="inquiries-title-row">
+            <span class="material-symbols-outlined group-icon">group</span>
+            <h3 class="inquiries-title">Interested Peers</h3>
+            <span class="inquiries-count">{{ inquiries().length }}</span>
+          </div>
+          <p class="inquiries-subtitle">
+            Contact information provided by students interested in your item. Call or email them directly to coordinate handoff!
+          </p>
+        </div>
+
+        <!-- Inquiries List -->
+        @if (inquiries().length > 0) {
+          <div class="inquiries-list">
+            @for (inq of inquiries(); track inq.id) {
+              <article class="inquiry-card">
+                <div class="inquiry-header-row">
+                  <div class="visitor-avatar">
+                    {{ getInitial(inq.name) }}
+                  </div>
+                  <div class="visitor-meta">
+                    <span class="visitor-name">{{ inq.name || 'Anonymous Visitor' }}</span>
+                    <span class="inquiry-time">{{ inq.createdAt | date:'short' }}</span>
+                  </div>
+                </div>
+
+                <!-- Direct Contact Link -->
+                <div class="contact-action-row">
+                  <a [href]="formatContactLink(inq.contact)" class="contact-link" target="_blank" rel="noopener">
+                    <span class="material-symbols-outlined contact-icon">
+                      {{ (inq.contact && inq.contact.includes('@')) ? 'mail' : 'phone' }}
+                    </span>
+                    <span class="contact-value">{{ inq.contact || 'No contact provided' }}</span>
+                  </a>
+                </div>
+
+                <!-- Visitor Message -->
+                <p class="inquiry-message">"{{ inq.message }}"</p>
+              </article>
+            }
+          </div>
+        } @else {
+          <!-- Empty Inquiries State -->
+          <div class="empty-inquiries">
+            <span class="material-symbols-outlined empty-inq-icon">chat_bubble_outline</span>
+            <h4 class="empty-inq-title">No inquiries yet</h4>
+            <p class="empty-inq-desc">
+              When students see your item on the campus feed and click "I'm interested", their contact info and pickup notes will show up here.
+            </p>
+          </div>
+        }
+      </section>
+    }
+
+    <!-- No Post Selected View: Show Saved Posts or Manual Access -->
+    @if (!loading() && !post() && !error()) {
+      <div class="select-post-view">
+        <h2 class="view-title">Your Posted Items</h2>
+
+        @if (savedPosts().length > 0) {
+          <div class="saved-posts-list">
+            <p class="saved-hint">Saved items created on this device:</p>
+            @for (saved of savedPosts(); track saved.id) {
+              <button
+                type="button"
+                class="saved-item-btn"
+                (click)="selectSavedPost(saved)">
+                <span class="material-symbols-outlined">inventory_2</span>
+                <span class="saved-item-id">Listing #{{ saved.id.slice(0, 8) }}</span>
+                <span class="material-symbols-outlined chevron">chevron_right</span>
+              </button>
+            }
+          </div>
+        } @else {
+          <div class="no-saved-box">
+            <span class="material-symbols-outlined empty-box-icon">inventory_2</span>
+            <h3>No listings found on this device</h3>
+            <p>If you recently posted an item, paste your private link or ID below.</p>
+          </div>
+        }
+
+        <!-- Manual Access Form -->
+        <div class="manual-access-card">
+          <h3 class="manual-title">Access via Private Token</h3>
+          <p class="manual-sub">Enter the post ID and edit token from your confirmation link.</p>
+
+          <div class="form-group">
+            <label class="form-label" for="manual-post-id">Post ID</label>
+            <input
+              id="manual-post-id"
+              type="text"
+              [(ngModel)]="manualId"
+              class="form-input"
+              placeholder="e.g. 4c774be0-3ee6-4004-aa1b...">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="manual-edit-token">Edit Token</label>
+            <input
+              id="manual-edit-token"
+              type="password"
+              [(ngModel)]="manualToken"
+              class="form-input"
+              placeholder="Secret token UUID">
+          </div>
+
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="submitManualAccess()"
+            [disabled]="!manualId.trim() || !manualToken.trim()">
+            Access Post
+          </button>
+        </div>
+      </div>
+    }
+  </main>
+
+  <!-- Sticky Bottom Navigation Bar -->
+  <app-bottom-nav></app-bottom-nav>
+</div>

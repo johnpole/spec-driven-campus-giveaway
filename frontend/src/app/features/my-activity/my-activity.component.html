@@ -1,0 +1,224 @@
+<div class="activity-page">
+  <app-header></app-header>
+
+  <main class="activity-content" role="main">
+    <div class="page-title-row">
+      <h1 class="page-title">My Activity</h1>
+      <p class="page-subtitle">Track your posted gear and active giveaway claims</p>
+    </div>
+
+    @if (!authService.isAuthenticated()) {
+      <div class="sign-in-prompt-card">
+        <div class="prompt-icon-wrapper">
+          <span class="material-symbols-outlined prompt-icon">lock</span>
+        </div>
+        <h2 class="prompt-title">Sign in to view your activity</h2>
+        <p class="prompt-body">
+          Sign in to manage your listings, view buyer inquiries, and track items you've requested.
+        </p>
+        <div class="prompt-actions">
+          <button type="button" class="primary-sign-in-btn" (click)="signIn()">
+            Sign in or create account
+          </button>
+        </div>
+      </div>
+    } @else {
+      <!-- Tabs -->
+      <div class="tabs-header" role="tablist">
+        <button
+          type="button"
+          role="tab"
+          class="tab-btn"
+          [class.active]="activeTab() === 'posts'"
+          [attr.aria-selected]="activeTab() === 'posts'"
+          (click)="switchTab('posts')">
+          <span class="material-symbols-outlined tab-icon">inventory_2</span>
+          <span>My Posts</span>
+          <span class="count-badge">{{ myPosts().length }}</span>
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          class="tab-btn"
+          [class.active]="activeTab() === 'requests'"
+          [attr.aria-selected]="activeTab() === 'requests'"
+          (click)="switchTab('requests')">
+          <span class="material-symbols-outlined tab-icon">favorite</span>
+          <span>Requested Items</span>
+          <span class="count-badge">{{ myInterests().length }}</span>
+        </button>
+      </div>
+
+      @if (loading()) {
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Loading your activity...</p>
+        </div>
+      } @else if (error()) {
+        <div class="error-banner">
+          <p>{{ error() }}</p>
+          <button type="button" class="retry-btn" (click)="loadData()">Retry</button>
+        </div>
+      } @else {
+        <!-- Tab 1: My Posts -->
+        @if (activeTab() === 'posts') {
+          <div class="tab-panel" role="tabpanel">
+            @if (myPosts().length === 0) {
+              <div class="empty-state">
+                <span class="material-symbols-outlined empty-icon">post_add</span>
+                <h3 class="empty-title">No items posted yet</h3>
+                <p class="empty-desc">Have gear you no longer need? Post it in 60 seconds.</p>
+                <a routerLink="/post" class="create-post-cta">Post an Item</a>
+              </div>
+            } @else {
+              <div class="posts-list">
+                @for (item of myPosts(); track item.id) {
+                  <article class="post-card" [class.is-taken]="item.status === 'TAKEN' || item.status === 'CLAIMED'">
+                    <div class="post-card-main">
+                      <div class="post-image-col">
+                        @if (item.photoUrl) {
+                          <img [src]="item.photoUrl" [alt]="item.title" class="post-thumb" />
+                        } @else {
+                          <div class="thumb-placeholder">
+                            <span class="material-symbols-outlined">image</span>
+                          </div>
+                        }
+                      </div>
+
+                      <div class="post-details-col">
+                        <div class="status-and-price">
+                          <span class="status-badge" [class.status-available]="item.status === 'AVAILABLE'" [class.status-taken]="item.status === 'TAKEN' || item.status === 'CLAIMED'">
+                            {{ item.status }}
+                          </span>
+                          <span class="post-price">
+                            @if (item.isFree || item.price === 0) {
+                              <strong class="free-text">FREE</strong>
+                            } @else {
+                              ${{ item.price }}
+                            }
+                          </span>
+                        </div>
+
+                        <h3 class="post-title">
+                          <a [routerLink]="['/items', item.id]">{{ item.title }}</a>
+                        </h3>
+                        <p class="post-meta">{{ item.category }} · Posted {{ item.createdAt | date:'shortDate' }}</p>
+
+                        <div class="inquiry-counter">
+                          <span class="material-symbols-outlined inquiry-icon">chat</span>
+                          <span><strong>{{ item.interestCount }}</strong> inquiries received</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Inquiries Details Collapsible -->
+                    @if (item.inquiries && item.inquiries.length > 0) {
+                      <div class="inquiries-panel">
+                        <h4 class="inquiries-title">Interested Buyers:</h4>
+                        <ul class="inquiry-items-list">
+                          @for (inq of item.inquiries; track inq.id) {
+                            <li class="inquiry-row">
+                              <div class="inquirer-info">
+                                <span class="inquirer-name">{{ inq.inquirerName }}</span>
+                                <a [href]="'mailto:' + inq.inquirerEmail" class="inquiry-email-link">{{ inq.inquirerEmail }}</a>
+                                <span class="inquiry-time">{{ inq.createdAt | date:'short' }}</span>
+                              </div>
+                              <p class="inquiry-message">"{{ inq.message }}"</p>
+                            </li>
+                          }
+                        </ul>
+                      </div>
+                    }
+
+                    <!-- Post Management Actions -->
+                    <div class="post-actions-row">
+                      @if (item.status === 'AVAILABLE') {
+                        <button
+                          type="button"
+                          class="action-btn mark-taken-btn"
+                          (click)="markAsTaken(item)"
+                          [disabled]="actionLoading() === item.id">
+                          <span class="material-symbols-outlined btn-icon">check_circle</span>
+                          Mark as Taken
+                        </button>
+                      }
+
+                      <button
+                        type="button"
+                        class="action-btn delete-btn"
+                        (click)="confirmDelete(item)"
+                        [disabled]="actionLoading() === item.id">
+                        <span class="material-symbols-outlined btn-icon">delete</span>
+                        Delete
+                      </button>
+                    </div>
+                  </article>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Tab 2: Items I Requested -->
+        @if (activeTab() === 'requests') {
+          <div class="tab-panel" role="tabpanel">
+            @if (myInterests().length === 0) {
+              <div class="empty-state">
+                <span class="material-symbols-outlined empty-icon">volunteer_activism</span>
+                <h3 class="empty-title">No requested items yet</h3>
+                <p class="empty-desc">Found something you like? Click "I'm Interested" to connect with the owner.</p>
+                <a routerLink="/" class="browse-cta">Browse Feed</a>
+              </div>
+            } @else {
+              <div class="requests-list">
+                @for (req of myInterests(); track req.interestId) {
+                  <article class="request-card">
+                    <div class="request-main">
+                      <div class="req-image-col">
+                        @if (req.postPhotoUrl) {
+                          <img [src]="req.postPhotoUrl" [alt]="req.postTitle" class="req-thumb" />
+                        } @else {
+                          <div class="thumb-placeholder">
+                            <span class="material-symbols-outlined">image</span>
+                          </div>
+                        }
+                      </div>
+
+                      <div class="req-info-col">
+                        <div class="req-header-row">
+                          <span class="status-badge" [class.status-available]="req.postStatus === 'AVAILABLE'" [class.status-taken]="req.postStatus === 'TAKEN' || req.postStatus === 'CLAIMED'">
+                            {{ req.postStatus }}
+                          </span>
+                          <span class="req-price">
+                            @if (req.postPrice === 0) {
+                              <strong class="free-text">FREE</strong>
+                            } @else {
+                              ${{ req.postPrice }}
+                            }
+                          </span>
+                        </div>
+
+                        <h3 class="req-title">
+                          <a [routerLink]="['/items', req.postId]">{{ req.postTitle }}</a>
+                        </h3>
+                        <p class="req-meta">{{ req.postCategory }} · Requested {{ req.createdAt | date:'shortDate' }}</p>
+
+                        <div class="your-note-box">
+                          <span class="note-label">Your pickup note:</span>
+                          <p class="note-text">"{{ req.message }}"</p>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                }
+              </div>
+            }
+          </div>
+        }
+      }
+    }
+  </main>
+
+  <app-bottom-nav></app-bottom-nav>
+</div>

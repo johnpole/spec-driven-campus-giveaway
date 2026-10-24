@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Blocks commits that touch code unless the verification gate passes.
+# Docs/spec-only commits skip the gate. Agents must never bypass this with --no-verify.
+
+if git diff --cached --name-only | grep -qE '^(backend|frontend)/'; then
+  echo "🔒 Code changes staged — running verification gate (scripts/verify.sh)…"
+  if ! "$(git rev-parse --show-toplevel)/scripts/verify.sh"; then
+    echo ""
+    echo "⛔ Commit blocked: verification failed. Fix the failures, then commit again."
+    exit 1
+  fi
+fi
+exit 0

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S0 — Campus Giveaway Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #D6001C;
+      --primary-dark: #B30017;
+      --primary-soft: #FDE8EA;
+      --secondary: #1F2328;
+      --secondary-muted: #656D76;
+      --tertiary-green: #2E9E5B;
+      --tertiary-soft: #EAF7EE;
+      --tertiary-border: #A7F3D0;
+      --canvas: #FAF8F5;
+      --surface: #FFFFFF;
+      --border-hairline: #E8E5DF;
+      --radius-sm: 8px;
+      --radius-base: 14px;
+      --radius-pill: 9999px;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--canvas);
+      color: var(--secondary);
+      margin: 0;
+      padding: 24px;
+    }
+    h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .color-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+    .swatch { width: 140px; height: 90px; border-radius: var(--radius-base); padding: 12px; font-size: 13px; font-weight: 600; border: 1px solid var(--border-hairline); box-shadow: 0 2px 8px -2px rgba(31,35,40,0.05); }
+    .badge { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; }
+    .badge-free { background: var(--tertiary-green); color: white; }
+    .badge-amber { background: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; }
+    .btn-primary { background: var(--primary); color: white; padding: 14px 24px; border: none; border-radius: var(--radius-base); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; width: 100%; max-width: 320px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Campus Giveaway — Design System (S0)</h1>
+  <p><strong>Theme:</strong> Campus Circular · <strong>Device:</strong> Mobile-First (390px)</p>
+  <h2>Core Palette</h2>
+  <div class="color-grid">
+    <div class="swatch" style="background: #D6001C; color: white;">Primary Cherry<br>#D6001C</div>
+    <div class="swatch" style="background: #1F2328; color: white;">Deep Charcoal<br>#1F2328</div>
+    <div class="swatch" style="background: #2E9E5B; color: white;">Leaf Green<br>#2E9E5B</div>
+    <div class="swatch" style="background: #FAF8F5; color: #1F2328;">Canvas<br>#FAF8F5</div>
+    <div class="swatch" style="background: #FFFFFF; color: #1F2328;">Surface<br>#FFFFFF</div>
+  </div>
+  <h2>Tokens & Components</h2>
+  <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px;">
+    <span class="badge badge-free">FREE</span>
+    <span class="badge badge-amber">Pending Review</span>
+  </div>
+  <button class="btn-primary">I'm interested</button>
+</body>
+</html>

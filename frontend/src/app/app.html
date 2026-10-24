@@ -1,0 +1,10 @@
+<div class="app-viewport">
+  <main class="main-content" role="main">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<!-- Sign-in modal lives at the root so every page (post, item, activity) can open it -->
+@if (authService.authModalOpen()) {
+  <app-auth-modal></app-auth-modal>
+}

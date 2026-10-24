@@ -1,0 +1,37 @@
+.DS_Store
+
+# Frontend
+node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Backend
+backend/target/
+backend/data/
+uploads/
+*.db
+
+# IDE / env
+.idea/
+.vscode/
+*.iml
+.env
+artifacts/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+[0-9]*.plan
+
+# Secrets (never commit)
+client_secret_*.json
+*.pem
+*-key.json
+
+# Angular build copied into Spring static resources
+backend/src/main/resources/static/
+
+# Private speaker notes (kept locally, never published)
+talk/

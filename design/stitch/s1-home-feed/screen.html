@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-fixed-variant": "#930010", "surface-container-low": "#f5f3f0", "on-primary": "#ffffff", "surface-container-lowest": "#ffffff", "outline": "#926e6b", "on-error-container": "#93000a", "on-secondary-container": "#5f6369", "on-surface": "#1b1c1a", "on-secondary": "#ffffff", "secondary-fixed-dim": "#c3c6cd", "outline-variant": "#e7bcb8", "surface-dim": "#dbdad7", "primary": "#a80013", "surface-container": "#efeeeb", "primary-fixed": "#ffdad6", "on-tertiary-container": "#a1ffb9", "inverse-primary": "#ffb3ac", "tertiary-container": "#007a3f", "tertiary-fixed": "#8df9ac", "on-secondary-fixed-variant": "#43474d", "error": "#ba1a1a", "on-error": "#ffffff", "secondary-fixed": "#e0e2e9", "on-tertiary": "#ffffff", "surface": "#fbf9f6", "inverse-on-surface": "#f2f0ed", "surface-container-high": "#eae8e5", "tertiary": "#005f30", "background": "#fbf9f6", "surface-bright": "#fbf9f6", "tertiary-fixed-dim": "#71dc92", "on-tertiary-fixed": "#00210d", "surface-tint": "#c00018", "secondary": "#5b5f64", "on-primary-container": "#ffe6e3", "primary-fixed-dim": "#ffb3ac", "on-background": "#1b1c1a", "primary-container": "#d6001c", "on-secondary-fixed": "#181c21", "inverse-surface": "#30312f", "on-primary-fixed": "#410003", "on-tertiary-fixed-variant": "#005229", "surface-container-highest": "#e4e2df", "on-surface-variant": "#5e3f3c", "surface-variant": "#e4e2df", "error-container": "#ffdad6", "secondary-container": "#dde0e6" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "gutter-desktop": "1.5rem", "space-sm": "0.5rem", "margin-desktop": "2rem", "space-xs": "0.25rem", "margin": "1rem", "space-md": "1rem", "space-xl": "2rem", "space-lg": "1.5rem", "gutter": "1rem" }, fontFamily: { "title-xl-mobile": ["Plus Jakarta Sans"], "micro": ["Inter"], "label-regular": ["Inter"], "title-md": ["Plus Jakarta Sans"], "label-meta": ["Plus Jakarta Sans"], "body-regular": ["Inter"], "title-xl": ["Plus Jakarta Sans"], "title-lg": ["Plus Jakarta Sans"], "body-medium": ["Inter"] }, fontSize: { "title-xl-mobile": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "micro": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }], "label-regular": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "label-meta": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "body-regular": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "title-xl": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-lg": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-medium": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "500" }] } } } };</script><style>@layer base { .pb-safe { padding-bottom: max(env(safe-area-inset-bottom, 16px), 16px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-regular min-h-full flex flex-col antialiased selection:bg-primary-fixed"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Campus Giveaway Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1rs5LppJ9M84m-yzE1cgyIiIND1gXdfEQvvFTpESKl7yR9bdSldmKEAGqebOh9kNZ0l3dkOiwXraIJdIBd0pQeG3vyPs54q_yORsvarRkRBPBDRXWLYWswMrF6HyjXS19nPIXDKNzjIwZkiB2dy5Mon6DTdc-52_vXSm0Kgv0so7kcfJJloN_MfOe8AtaSKR8uKM-_vCD6-8L459phAUdunk6AtbL1RAIUzdJfKuTDERtT5XcC4UuhA"/><div class="flex flex-col min-w-0"><span class="font-title-md text-title-md text-on-surface truncate leading-tight">Campus Giveaway</span><span class="font-micro text-micro text-secondary truncate">Browse</span></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Notifications" class="w-12 h-12 flex items-center justify-center rounded-full text-secondary hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[24px]">notifications</span></button><a class="w-12 h-12 flex items-center justify-center" data-path="profile" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_-2px_rgba(31,35,40,0.08)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB291nlyi-9VPViUeF-5FJY0brNYF2Hdm8dDB6wKKyOjS_zcLxD2oqfSjzu91n8H1epbjsNx7m_O4JUrgAnV29z7dTvd3OfnLBcwiqdejW4K3ywqJx2ieTRgr-FWcbi6s6sZw9pzI-zkgQNRsq_t3EvOCSb2uZepd6cTCLE0wtPznsWfiFYL5aTokAzeaDMcXYW2cehOUFu-BeBBojheWMz8y8nZOOMVDxHK1CpEo549zbteyGpt2LgA"/></a></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-28 px-margin bg-surface"><div class="flex flex-col w-full pb-6">
+<!-- Search & Filter Bar -->
+<section class="w-full mb-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="relative flex-1 flex items-center bg-surface-container-lowest rounded-full shadow-[0_2px_8px_-2px_rgba(31,35,40,0.06)] px-space-md py-2.5">
+<span class="material-symbols-outlined text-secondary text-[22px] mr-2">search</span>
+<input aria-label="Search items" class="w-full bg-transparent text-body-medium font-body-medium text-on-surface placeholder:text-secondary focus:outline-none placeholder:text-[15px]" placeholder="Search desks, mini-fridges, textbooks…" type="text"/>
+<button aria-label="Clear search" class="text-secondary hover:text-on-surface flex items-center justify-center p-1">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+</button>
+</div>
+<button aria-label="Filter items" class="h-12 w-12 rounded-full bg-surface-container-lowest text-on-surface flex items-center justify-center shadow-[0_2px_8px_-2px_rgba(31,35,40,0.06)] hover:bg-surface-container transition-all active:scale-95 flex-shrink-0" id="filter-btn">
+<span class="material-symbols-outlined text-[22px] text-secondary">tune</span>
+</button>
+</div>
+</section>
+<!-- Hero Impact Banner: Moving Out? Pass it on. -->
+<section class="w-full mb-space-lg">
+<div class="relative overflow-hidden bg-gradient-to-br from-surface-container-lowest to-surface-container-low rounded-2xl p-4 shadow-[0_2px_12px_-2px_rgba(31,35,40,0.05)]">
+<!-- Decorative ambient leaf badge -->
+<div class="absolute -right-3 -bottom-3 w-24 h-24 rounded-full bg-tertiary-fixed/30 flex items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-[48px] text-tertiary/20">recycling</span>
+</div>
+<div class="relative z-10 flex items-start gap-3">
+<!-- Friendly Box Mascot Icon -->
+<div class="w-12 h-12 rounded-xl bg-primary-fixed flex items-center justify-center text-primary-container flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[28px] text-primary" style="font-variation-settings: 'FILL' 1;">package_2</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="font-title-md text-title-md text-on-surface leading-snug">Moving out? Pass it on.</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-tertiary-container text-on-tertiary text-micro font-micro">
+<span class="material-symbols-outlined text-[12px]">eco</span>
+              Zero Waste
+            </span>
+</div>
+<p class="font-body-regular text-micro text-secondary leading-relaxed mb-2">
+            Give useful dorm gear a second home before break. Handoff safely right on campus.
+          </p>
+<div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-surface-container text-micro font-micro text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span><strong class="font-title-md text-on-surface">1,240</strong> rehomed · <strong class="font-title-md text-tertiary">3.1 tons</strong> spared</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Horizontally Scrolling Category Chips -->
+<section class="w-full mb-space-lg">
+<div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar -mx-margin px-margin scroll-smooth">
+<!-- Chip: All (Active) -->
+<button class="category-chip flex-shrink-0 px-4 py-2 rounded-full bg-primary-container text-on-primary font-label-meta text-label-meta shadow-[0_2px_8px_rgba(214,0,28,0.25)] flex items-center gap-1.5 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[16px]">widgets</span>
+<span>All</span>
+</button>
+<!-- Chip: Free (Highlighted with Green Pill Accent) -->
+<button class="category-chip flex-shrink-0 px-4 py-2 rounded-full bg-surface-container-lowest text-tertiary hover:bg-surface-container font-label-meta text-label-meta shadow-[0_1px_4px_rgba(31,35,40,0.06)] flex items-center gap-1.5 transition-transform active:scale-95">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+<span class="text-on-surface">Free Only</span>
+</button>
+<!-- Chip: Furniture -->
+<button class="category-chip flex-shrink-0 px-4 py-2 rounded-full bg-surface-container-lowest text-secondary hover:text-on-surface font-label-meta text-label-meta shadow-[0_1px_4px_rgba(31,35,40,0.06)] flex items-center gap-1.5 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[16px]">chair</span>
+<span>Furniture</span>
+</button>
+<!-- Chip: Electronics -->
+<button class="category-chip flex-shrink-0 px-4 py-2 rounded-full bg-surface-container-lowest text-secondary hover:text-on-surface font-label-meta text-label-meta shadow-[0_1px_4px_rgba(31,35,40,0.06)] flex items-center gap-1.5 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[16px]">devices</span>
+<span>Electronics</span>
+</button>
+<!-- Chip: Textbooks -->
+<button class="category-chip flex-shrink-0 px-4 py-2 rounded-full bg-surface-container-lowest text-secondary hover:text-on-surface font-label-meta text-label-meta shadow-[0_1px_4px_rgba(31,35,40,0.06)] flex items-center gap-1.5 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+<span>Textbooks</span>
+</button>
+<!-- Chip: Dorm essentials -->
+<button class="category-chip flex-shrink-0 px-4 py-2 rounded-full bg-surface-container-lowest text-secondary hover:text-on-surface font-label-meta text-label-meta shadow-[0_1px_4px_rgba(31,35,40,0.06)] flex items-center gap-1.5 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[16px]">bed</span>
+<span>Dorm Gear</span>
+</button>
+<!-- Chip: Kitchen -->
+<button class="category-chip flex-shrink-0 px-4 py-2 rounded-full bg-surface-container-lowest text-secondary hover:text-on-surface font-label-meta text-label-meta shadow-[0_1px_4px_rgba(31,35,40,0.06)] flex items-center gap-1.5 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[16px]">microwave</span>
+<span>Kitchen</span>
+</button>
+<!-- Chip: Bikes -->
+<button class="category-chip flex-shrink-0 px-4 py-2 rounded-full bg-surface-container-lowest text-secondary hover:text-on-surface font-label-meta text-label-meta shadow-[0_1px_4px_rgba(31,35,40,0.06)] flex items-center gap-1.5 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[16px]">pedal_bike</span>
+<span>Bikes</span>
+</button>
+</div>
+</section>
+<!-- Feed Header with Count & Sort -->
+<section class="w-full flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<h2 class="font-title-md text-title-md text-on-surface tracking-tight">Available Near You</h2>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-micro font-micro text-secondary font-semibold">48 items</span>
+</div>
+<!-- Quick Sort Toggle -->
+<div class="flex items-center bg-surface-container-lowest rounded-lg p-0.5 shadow-sm">
+<button class="px-2.5 py-1 text-micro font-micro font-semibold rounded-md bg-surface-container text-on-surface transition-all" id="sort-latest">
+        Latest
+      </button>
+<button class="px-2.5 py-1 text-micro font-micro font-semibold rounded-md text-secondary hover:text-on-surface transition-all" id="sort-nearest">
+        Nearest
+      </button>
+</div>
+</section>
+<!-- Two-Column Grid of Authentic Campus Item Cards -->
+<section class="w-full grid grid-cols-2 gap-3 mb-space-lg" id="items-grid">
+<!-- Card 1: Haier Mini Fridge (FREE) -->
+<article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_8px_-2px_rgba(31,35,40,0.06)] hover:shadow-md transition-all active:scale-[0.99] group">
+<div class="relative w-full aspect-square bg-surface-container overflow-hidden">
+<img alt="Haier Mini Fridge" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Clean compact Haier 2.7 cubic foot white mini fridge sitting on a dorm hardwood floor with natural window lighting, clean exterior, crisp collegiate atmosphere, warm modern film grain photo." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmluq7miek0RYuAGx38DZx1UE9R1bYc0Te9CAEQ0N_Zy9XPxC_wXcT-N5pS-9FDWu0cesfvwu7MSS6hRevBoefL1lW3jPnO8YcSn_ziSMchux_30OIra1lZMdQoiBUg9kcOmkVzwUmVpi9IAuzwFtLRKj6hIA7rCVpBCKtegPAGOE5wZPX3akmJYL2BoGtbaJoBxeoyvFrVdPyzU-TrGF0dJfaY6G84hOUXQJaOXQ_0uImk5Q2fagLGw"/>
+<!-- Price Pill (FREE) -->
+<span class="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-tertiary-container text-on-tertiary font-label-meta text-micro tracking-wide shadow-sm flex items-center gap-1 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary"></span>
+          FREE
+        </span>
+<span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface text-[11px] font-micro font-semibold shadow-xs">
+          Good
+        </span>
+</div>
+<div class="p-2.5 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-title-md text-[14px] leading-tight text-on-surface line-clamp-2 font-bold mb-1 group-hover:text-primary transition-colors">
+            Haier Mini Fridge - Works Great!
+          </h3>
+</div>
+<div class="pt-1.5 flex flex-col gap-1">
+<div class="flex items-center text-secondary text-micro font-micro gap-1 truncate">
+<span class="material-symbols-outlined text-[14px] text-primary flex-shrink-0">location_on</span>
+<span class="truncate">Barton Hall</span>
+</div>
+<div class="flex items-center justify-between text-micro font-micro text-secondary">
+<span>2h ago</span>
+<button aria-label="Save item" class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2: IKEA Flintan Chair ($15) -->
+<article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_8px_-2px_rgba(31,35,40,0.06)] hover:shadow-md transition-all active:scale-[0.99] group">
+<div class="relative w-full aspect-square bg-surface-container overflow-hidden">
+<img alt="IKEA Office Chair" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Modern black mesh IKEA Flintan ergonomic desk chair on wheels, placed in a bright university study nook with sun pouring onto the fabric, natural realistic photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfyT1qfIopCTPKuP7WdD9wzku5bt_isqNvJhutfz7v6CmjSMl9FFXaXil69V-LQGF7YPvNf_2FcqTGLTpJgtjEL1Iprnr4yimsUub9-EhWVRF1xWaR6nThBlXSl9n3K7A8o4d7oHX_-_sJv6oSTD5XbnGruZZ4fRdApzx16DqIU_Q5_PhQaMepE8De2gRkAuKvY8kU6TRErfDxHLYgbWiW5BovI5XQLLTzrSb2c_ta_pQHvw1TFg163g"/>
+<!-- Price Pill ($15) -->
+<span class="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-inverse-surface text-inverse-on-surface font-label-meta text-micro tracking-wide shadow-sm font-bold">
+          $15
+        </span>
+<span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-surface-container-lowest/90 backdrop-blur-sm text-tertiary text-[11px] font-micro font-semibold shadow-xs">
+          Like New
+        </span>
+</div>
+<div class="p-2.5 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-title-md text-[14px] leading-tight text-on-surface line-clamp-2 font-bold mb-1 group-hover:text-primary transition-colors">
+            IKEA Flintan Office Chair (Black)
+          </h3>
+</div>
+<div class="pt-1.5 flex flex-col gap-1">
+<div class="flex items-center text-secondary text-micro font-micro gap-1 truncate">
+<span class="material-symbols-outlined text-[14px] text-primary flex-shrink-0">location_on</span>
+<span class="truncate">Quad / Hill</span>
+</div>
+<div class="flex items-center justify-between text-micro font-micro text-secondary">
+<span>35m ago</span>
+<button aria-label="Save item" class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 3: O-Chem Textbook + Model Kit (FREE) -->
+<article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_8px_-2px_rgba(31,35,40,0.06)] hover:shadow-md transition-all active:scale-[0.99] group">
+<div class="relative w-full aspect-square bg-surface-container overflow-hidden">
+<img alt="Organic Chemistry Textbook" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Wade Organic Chemistry thick hardcover textbook laid flat on library wooden study desk next to a plastic molecular model building kit with colorful plastic atoms, crisp student gear aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4vM962hBkl3oKaPlwsWK3_aSqoGMkmRz9ybH6X1LcTsBNeO6nhSgPnRl3XUH9oLZ4SLkufSco3Bu6WlZjAppnvCe6I2NUAOLypdKHHN7oflq9cjmRUjmxQI65glX7p8W_STsXPAaSdTbwehR9vaGIWscC0DNMXZaPJY_MLfYmL81VPaO2I-AlGiBif184YcuochkaM7zqVxKZa9TGMjvyEdOhtojqZQeVQE3I0ILsBRlzC7fSDcZ_Eg"/>
+<!-- Price Pill (FREE) -->
+<span class="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-tertiary-container text-on-tertiary font-label-meta text-micro tracking-wide shadow-sm flex items-center gap-1 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary"></span>
+          FREE
+        </span>
+<span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface text-[11px] font-micro font-semibold shadow-xs">
+          Gently Used
+        </span>
+</div>
+<div class="p-2.5 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-title-md text-[14px] leading-tight text-on-surface line-clamp-2 font-bold mb-1 group-hover:text-primary transition-colors">
+            Wade Organic Chemistry 9th Ed + Kit
+          </h3>
+</div>
+<div class="pt-1.5 flex flex-col gap-1">
+<div class="flex items-center text-secondary text-micro font-micro gap-1 truncate">
+<span class="material-symbols-outlined text-[14px] text-primary flex-shrink-0">location_on</span>
+<span class="truncate">Library Steps</span>
+</div>
+<div class="flex items-center justify-between text-micro font-micro text-secondary">
+<span>1h ago</span>
+<button aria-label="Save item" class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 4: Microwave Oven ($10) -->
+<article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_8px_-2px_rgba(31,35,40,0.06)] hover:shadow-md transition-all active:scale-[0.99] group">
+<div class="relative w-full aspect-square bg-surface-container overflow-hidden">
+<img alt="Compact Microwave" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Clean compact stainless steel front microwave oven on a dorm kitchen counter, neat condition, bright sunny apartment kitchen, collegiate vibe, authentic product photo." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3ruGNebPgv2Pz3erzIiuJL7T4_mP4b-_YlzTPN80Qo7QjROYR8XzRtxE8sNB17QC9a1dr-WWZTFuv4aGd-aLwljSkzH_IcQ_wKNO9SAEvfZwaDR2XgVXLLuolehKF4MTHMONucMhUjRP7WTe6VMmReLD9tQTjN-zu2TFAEKoMdmG0z55z0Jvz1OdsI6jX-xCA1Iq92Vvi2pxLNnAJviDIE-nVG9Yl6kBDMxHbeyemwZKTbNXtE2kybA"/>
+<!-- Price Pill ($10) -->
+<span class="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-inverse-surface text-inverse-on-surface font-label-meta text-micro tracking-wide shadow-sm font-bold">
+          $10
+        </span>
+<span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface text-[11px] font-micro font-semibold shadow-xs">
+          Good
+        </span>
+</div>
+<div class="p-2.5 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-title-md text-[14px] leading-tight text-on-surface line-clamp-2 font-bold mb-1 group-hover:text-primary transition-colors">
+            Compact Microwave 700W clean
+          </h3>
+</div>
+<div class="pt-1.5 flex flex-col gap-1">
+<div class="flex items-center text-secondary text-micro font-micro gap-1 truncate">
+<span class="material-symbols-outlined text-[14px] text-primary flex-shrink-0">location_on</span>
+<span class="truncate">Colonie Apts</span>
+</div>
+<div class="flex items-center justify-between text-micro font-micro text-secondary">
+<span>3h ago</span>
+<button aria-label="Save item" class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 5: Trek Hybrid Commuter Bicycle ($45) -->
+<article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_8px_-2px_rgba(31,35,40,0.06)] hover:shadow-md transition-all active:scale-[0.99] group">
+<div class="relative w-full aspect-square bg-surface-container overflow-hidden">
+<img alt="Trek Commuter Bicycle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Dark gray Trek commuter hybrid bike parked neatly against a red brick campus building wall, heavy U-lock attached to frame, leafy green trees in soft background bokeh." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFA7Ct2Zia43PXtQD-VI1nmBONEu0J7lLhDSjZ3bR6VJW1bnQGQlg8GYLue2jgpFAhlTIvDZs4FHrTtZqlp1uytOZgUrBshWiRrZJgBofHiSgHbndME9fcN0P2AuTTOPRxqlW1VAwrIqHKkYMsHlfkGn0wlRUZWOPlZWjCMZZiJ64H9AESy0YKI9BIcRlWyspX0NXP6pngkkt0oJRa9I4H8JYZvwaz0EzPje8hN4tR0qYtMZFzOVo9kQ"/>
+<!-- Price Pill ($45) -->
+<span class="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-inverse-surface text-inverse-on-surface font-label-meta text-micro tracking-wide shadow-sm font-bold">
+          $45
+        </span>
+<span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface-variant text-[11px] font-micro font-semibold shadow-xs">
+          Fair
+        </span>
+</div>
+<div class="p-2.5 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-title-md text-[14px] leading-tight text-on-surface line-clamp-2 font-bold mb-1 group-hover:text-primary transition-colors">
+            Trek FX 2 21-Speed Bike w/ Lock
+          </h3>
+</div>
+<div class="pt-1.5 flex flex-col gap-1">
+<div class="flex items-center text-secondary text-micro font-micro gap-1 truncate">
+<span class="material-symbols-outlined text-[14px] text-primary flex-shrink-0">location_on</span>
+<span class="truncate">Student Union</span>
+</div>
+<div class="flex items-center justify-between text-micro font-micro text-secondary">
+<span>4h ago</span>
+<button aria-label="Save item" class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 6: Warm Twin XL Fleece Mattress Pad & Lamp (FREE) -->
+<article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_8px_-2px_rgba(31,35,40,0.06)] hover:shadow-md transition-all active:scale-[0.99] group">
+<div class="relative w-full aspect-square bg-surface-container overflow-hidden">
+<img alt="Twin XL Pad + Desk Lamp bundle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Folded clean plush white Twin XL mattress topper pad bundled with a minimalist matte black adjustable desk LED lamp, dorm room setting, tidy and fresh aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDduS-ncnfDH25oVrX3qu37YhrWZEa6yX6djntDdRP0M-mzctnQ6vCs1j69-siuzwnHlR9DH6SfbpuBxaMqxHhJvb-jdtSjRKxe7sGGTHyylDscQT_KoVDVsS6TlkQaPjXzR0d8jfktypv0lEuhC-cqGAnd1zkCaSMpoSiEq2THCDrcjy43XfrmPQuxhna4HIlIlM-KQsStsv30nx6JKmmNcxUYEk6QNP1OZG4XKNIpcV-5XHFki9xbw"/>
+<!-- Price Pill (FREE) -->
+<span class="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-tertiary-container text-on-tertiary font-label-meta text-micro tracking-wide shadow-sm flex items-center gap-1 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary"></span>
+          FREE
+        </span>
+<span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-surface-container-lowest/90 backdrop-blur-sm text-tertiary text-[11px] font-micro font-semibold shadow-xs">
+          Like New
+        </span>
+</div>
+<div class="p-2.5 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-title-md text-[14px] leading-tight text-on-surface line-clamp-2 font-bold mb-1 group-hover:text-primary transition-colors">
+            Target Twin XL Pad + Desk Lamp
+          </h3>
+</div>
+<div class="pt-1.5 flex flex-col gap-1">
+<div class="flex items-center text-secondary text-micro font-micro gap-1 truncate">
+<span class="material-symbols-outlined text-[14px] text-primary flex-shrink-0">location_on</span>
+<span class="truncate">Sharp Hall</span>
+</div>
+<div class="flex items-center justify-between text-micro font-micro text-secondary">
+<span>15m ago</span>
+<button aria-label="Save item" class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 7: Brita Water Pitcher (FREE) -->
+<article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_8px_-2px_rgba(31,35,40,0.06)] hover:shadow-md transition-all active:scale-[0.99] group">
+<div class="relative w-full aspect-square bg-surface-container overflow-hidden">
+<img alt="Brita Water Filter Pitcher" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Clear Brita water filter pitcher filled with crisp water alongside two brand new sealed replacement filter boxes, bright morning light on a wooden table." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBngNsTBaSnmQHEC6XUECSF4NtbKEziTlnjmwbCkKb9SC0CjeMxiKAP3HXFZbixlqB5GHt8m5-mmg2SiEajB6QIyowYw4W7gw3MYEqaM_bP39NSXpOppMFoAQzlvi-DUJFlpwT7CEAkssiA8Ok8kOt3jD1Th2TUCVjxpZVcwYtJsFtS0WoP5ztHQc5-T6AwLGwEIbxPl3xX9H_NnXiU-8dEEjQ8I0_QsTvvC75IgHZj2j_kBkek256MjQ"/>
+<!-- Price Pill (FREE) -->
+<span class="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-tertiary-container text-on-tertiary font-label-meta text-micro tracking-wide shadow-sm flex items-center gap-1 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary"></span>
+          FREE
+        </span>
+<span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-surface-container-lowest/90 backdrop-blur-sm text-tertiary text-[11px] font-micro font-semibold shadow-xs">
+          New
+        </span>
+</div>
+<div class="p-2.5 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-title-md text-[14px] leading-tight text-on-surface line-clamp-2 font-bold mb-1 group-hover:text-primary transition-colors">
+            Brita 6-Cup Pitcher + 2 Filters
+          </h3>
+</div>
+<div class="pt-1.5 flex flex-col gap-1">
+<div class="flex items-center text-secondary text-micro font-micro gap-1 truncate">
+<span class="material-symbols-outlined text-[14px] text-primary flex-shrink-0">location_on</span>
+<span class="truncate">Davison Hall</span>
+</div>
+<div class="flex items-center justify-between text-micro font-micro text-secondary">
+<span>4h ago</span>
+<button aria-label="Save item" class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 8: Wooden Foldable Study Desk ($20) -->
+<article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_8px_-2px_rgba(31,35,40,0.06)] hover:shadow-md transition-all active:scale-[0.99] group">
+<div class="relative w-full aspect-square bg-surface-container overflow-hidden">
+<img alt="Wooden Foldable Writing Desk" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Foldable light oak wooden 40-inch study desk neatly set up in a cozy student room next to a potted succulent, clean minimalist student living, warm light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZWfZ13grhlL4BT-2--OHV4sd01gVA20UIKIWFw-gDU40x21vgX8_EbLXSqAixd9-v42gzNvBGLmX1zcWG6UfmoPsCvhHR2q9OpnMajT1Y3Af-p0MQwtPFDOsVN2xrBUBz-Bo6JlOOirvbrtHEsgcLGs-ztH34DRtLdFmHKiMZYaR2rqxYPrrGuZYZRexQHauAIkC39POA0ZEBzlWeKkZHVljM782eedsLmgSkgvsvFuVL-gCV7H1C1w"/>
+<!-- Price Pill ($20) -->
+<span class="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-inverse-surface text-inverse-on-surface font-label-meta text-micro tracking-wide shadow-sm font-bold">
+          $20
+        </span>
+<span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface text-[11px] font-micro font-semibold shadow-xs">
+          Good
+        </span>
+</div>
+<div class="p-2.5 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-title-md text-[14px] leading-tight text-on-surface line-clamp-2 font-bold mb-1 group-hover:text-primary transition-colors">
+            Wooden Foldable Study Desk 40"
+          </h3>
+</div>
+<div class="pt-1.5 flex flex-col gap-1">
+<div class="flex items-center text-secondary text-micro font-micro gap-1 truncate">
+<span class="material-symbols-outlined text-[14px] text-primary flex-shrink-0">location_on</span>
+<span class="truncate">Blitman Res</span>
+</div>
+<div class="flex items-center justify-between text-micro font-micro text-secondary">
+<span>5h ago</span>
+<button aria-label="Save item" class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</section>
+<!-- Infinite Scroll / Loading State Indicator -->
+<div class="w-full py-4 flex flex-col items-center justify-center gap-2 text-secondary">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-ping"></span>
+<span class="font-micro text-micro text-secondary">Loading more campus listings...</span>
+</div>
+<div class="w-24 h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full w-1/2 animate-[pulse_1.5s_ease-in-out_infinite]"></div>
+</div>
+</div>
+<!-- Floating Action Button (FAB) anchored safely above bottom bar -->
+<div class="fixed bottom-20 right-4 z-40">
+<a aria-label="Post a new item" class="flex items-center gap-2 px-5 py-3.5 rounded-full bg-primary-container text-on-primary font-title-md text-[15px] shadow-[0_8px_24px_rgba(214,0,28,0.38)] hover:bg-primary active:scale-95 transition-all duration-200" data-path="post" href="#">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'wght' 700;">add</span>
+<span>Post Item</span>
+</a>
+</div>
+</div>
+<!-- Interactive category chip selection & sort micro-interactions -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Category chips toggle behavior
+    const chips = document.querySelectorAll('.category-chip');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => {
+          c.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-[0_2px_8px_rgba(214,0,28,0.25)]');
+          c.classList.add('bg-surface-container-lowest', 'text-secondary');
+        });
+        chip.classList.add('bg-primary-container', 'text-on-primary', 'shadow-[0_2px_8px_rgba(214,0,28,0.25)]');
+        chip.classList.remove('bg-surface-container-lowest', 'text-secondary');
+      });
+    });
+
+    // Favorite heart button toggle
+    const favButtons = document.querySelectorAll('button[aria-label="Save item"]');
+    favButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon.innerText === 'favorite_border') {
+          icon.innerText = 'favorite';
+          icon.style.fontVariationSettings = "'FILL' 1";
+          btn.classList.add('text-primary');
+          btn.classList.remove('text-secondary');
+        } else {
+          icon.innerText = 'favorite_border';
+          icon.style.fontVariationSettings = "'FILL' 0";
+          btn.classList.remove('text-primary');
+          btn.classList.add('text-secondary');
+        }
+      });
+    });
+
+    // Sort buttons toggle
+    const sortLatest = document.getElementById('sort-latest');
+    const sortNearest = document.getElementById('sort-nearest');
+    if (sortLatest && sortNearest) {
+      sortLatest.addEventListener('click', () => {
+        sortLatest.classList.add('bg-surface-container', 'text-on-surface');
+        sortLatest.classList.remove('text-secondary');
+        sortNearest.classList.remove('bg-surface-container', 'text-on-surface');
+        sortNearest.classList.add('text-secondary');
+      });
+      sortNearest.addEventListener('click', () => {
+        sortNearest.classList.add('bg-surface-container', 'text-on-surface');
+        sortNearest.classList.remove('text-secondary');
+        sortLatest.classList.remove('bg-surface-container', 'text-on-surface');
+        sortLatest.classList.add('text-secondary');
+      });
+    }
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_20px_-2px_rgba(31,35,40,0.06)]" data-active-classes="text-primary font-title-md"><div class="h-16 px-margin flex items-center justify-around"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] px-space-xs transition-colors group text-primary font-title-md" data-path="browse" href="#"><span class="material-symbols-outlined text-[24px]">explore</span><span class="font-micro text-micro mt-0.5">Browse</span></a><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] px-space-xs text-secondary hover:text-on-surface transition-colors group" data-path="post" href="#"><div class="w-9 h-9 rounded-xl bg-primary-container text-on-primary flex items-center justify-center shadow-[0_2px_8px_rgba(214,0,28,0.3)]"><span class="material-symbols-outlined text-[22px]">add</span></div><span class="font-micro text-micro mt-0.5">Post</span></a><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] px-space-xs text-secondary hover:text-on-surface transition-colors group" data-path="my-items" href="#"><span class="material-symbols-outlined text-[24px]">inventory_2</span><span class="font-micro text-micro mt-0.5">My items</span></a></div></nav></body></html>

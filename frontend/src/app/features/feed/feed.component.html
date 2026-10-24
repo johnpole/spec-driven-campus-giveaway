@@ -1,0 +1,207 @@
+<div class="feed-page">
+  <!-- Top App Header with Profile / Sign-in -->
+  <app-header></app-header>
+
+  <!-- Welcome / Sign-in Banner for Visitors -->
+  @if (!authService.isAuthenticated()) {
+    <aside class="welcome-auth-banner" aria-label="Sign in or register">
+      <div class="welcome-auth-text">
+        <strong class="welcome-title">👋 Hey Engineers!</strong>
+        <p class="welcome-desc">Sign in to claim free gear or pass on your own.</p>
+      </div>
+      <button type="button" class="welcome-auth-btn" (click)="authService.openAuthModal()" aria-label="Sign In or Register">
+        <span class="material-symbols-outlined icon-small">login</span>
+        <span>Sign In</span>
+      </button>
+    </aside>
+  }
+
+  <!-- Sticky Search Bar -->
+  <header class="feed-header">
+    <!-- Search input -->
+    <div class="search-container">
+      <span class="material-symbols-outlined search-icon">search</span>
+      <input
+        type="search"
+        class="search-input"
+        placeholder="Search desks, textbooks, fridges..."
+        [ngModel]="searchQuery()"
+        (ngModelChange)="onSearchChange($event)"
+        aria-label="Search items">
+      @if (searchQuery().length > 0) {
+        <button class="clear-search-btn" (click)="clearSearch()" aria-label="Clear search">
+          <span class="material-symbols-outlined clear-icon">close</span>
+        </button>
+      }
+    </div>
+  </header>
+
+  <main class="feed-content">
+    <!-- Hero Impact Banner -->
+    <section class="impact-banner" aria-label="Campus sustainability impact">
+      <div class="impact-content">
+        <div class="impact-tag">
+          <span class="material-symbols-outlined eco-icon" aria-hidden="true">eco</span>
+          <span>RPI · Troy, NY</span>
+        </div>
+        <h2 class="impact-heading">Moving out of Troy?<br />Pass it on, Engineers.</h2>
+        <p class="impact-body">
+          Desks, mini-fridges, textbooks and bikes get a second semester — free or cheap, handed off right on campus.
+        </p>
+        <div class="impact-stats">
+          <div class="impact-stat-pill"><strong>{{ postService.posts().length }}</strong><span>live now</span></div>
+          <div class="impact-stat-pill"><strong>{{ freeCount() }}</strong><span>free</span></div>
+          <div class="impact-stat-pill"><strong>3.1 t</strong><span>kept from landfill</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Horizontal Category Scroll Chips -->
+    <section class="category-scroll-section" aria-label="Filter by category">
+      <div class="category-chips-row">
+        <!-- All chip -->
+        <button
+          type="button"
+          class="cat-chip"
+          [class.active]="activeCategory() === null"
+          (click)="onCategorySelect(null)">
+          <span class="material-symbols-outlined chip-icon">widgets</span>
+          <span>All</span>
+        </button>
+
+        <!-- Free Only toggle chip -->
+        <button
+          type="button"
+          class="cat-chip free-chip"
+          [class.active]="freeOnly()"
+          (click)="toggleFreeOnly()"
+          aria-label="Filter free items only">
+          <span class="free-dot"></span>
+          <span>Free only</span>
+        </button>
+
+        <!-- Category chips -->
+        @for (cat of categories; track cat) {
+          <button
+            type="button"
+            class="cat-chip"
+            [class.active]="activeCategory() === cat"
+            (click)="onCategorySelect(cat)">
+            <span>{{ cat }}</span>
+          </button>
+        }
+      </div>
+    </section>
+
+    <!-- Section Title & Item Counter -->
+    <div class="feed-section-header">
+      <h2 class="feed-section-title">
+        @if (activeCategory()) {
+          {{ activeCategory() }}
+        } @else {
+          Available Near You
+        }
+      </h2>
+      <div class="section-tools">
+        <span class="count-badge">
+          {{ postService.posts().length }} {{ postService.posts().length === 1 ? 'item' : 'items' }}
+        </span>
+        <button
+          type="button"
+          class="view-toggle-btn"
+          id="customize-view-btn"
+          [class.active]="viewPanelOpen()"
+          [attr.aria-expanded]="viewPanelOpen()"
+          aria-controls="view-panel"
+          (click)="viewPanelOpen.set(!viewPanelOpen())">
+          <span class="material-symbols-outlined" aria-hidden="true">tune</span>
+          <span>View</span>
+        </button>
+      </div>
+    </div>
+
+    @if (viewPanelOpen()) {
+      <section class="view-panel" id="view-panel" aria-label="Customize how the feed looks">
+        <div class="view-row">
+          <span class="view-label" id="layout-label">Layout</span>
+          <div class="view-seg" role="radiogroup" aria-labelledby="layout-label">
+            <button type="button" role="radio" id="layout-grid" [attr.aria-checked]="view.layout() === 'grid'" [class.on]="view.layout() === 'grid'" (click)="view.layout.set('grid')">
+              <span class="material-symbols-outlined" aria-hidden="true">grid_view</span> Grid
+            </button>
+            <button type="button" role="radio" id="layout-list" [attr.aria-checked]="view.layout() === 'list'" [class.on]="view.layout() === 'list'" (click)="view.layout.set('list')">
+              <span class="material-symbols-outlined" aria-hidden="true">view_agenda</span> List
+            </button>
+          </div>
+        </div>
+        <div class="view-row">
+          <span class="view-label" id="density-label">Card size</span>
+          <div class="view-seg" role="radiogroup" aria-labelledby="density-label">
+            <button type="button" role="radio" [attr.aria-checked]="view.density() === 'comfortable'" [class.on]="view.density() === 'comfortable'" (click)="view.density.set('comfortable')">Comfortable</button>
+            <button type="button" role="radio" id="density-compact" [attr.aria-checked]="view.density() === 'compact'" [class.on]="view.density() === 'compact'" (click)="view.density.set('compact')">Compact</button>
+          </div>
+        </div>
+        <div class="view-row">
+          <label class="view-label" for="sort-select">Sort by</label>
+          <select id="sort-select" class="view-select" [value]="view.sort()" (change)="setSort($any($event.target).value)">
+            <option value="newest">Newest first</option>
+            <option value="free-first">Free first</option>
+            <option value="price-low">Price: low to high</option>
+          </select>
+        </div>
+        <button type="button" class="view-reset" (click)="view.reset()">Reset view</button>
+      </section>
+    }
+
+    <!-- Loading State -->
+    @if (postService.loading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading campus items...</p>
+      </div>
+    }
+
+    <!-- Item Cards Grid -->
+    @if (!postService.loading() && postService.posts().length > 0) {
+      <div
+        class="items-grid"
+        id="items-grid"
+        [class.layout-list]="view.layout() === 'list'"
+        [class.density-compact]="view.density() === 'compact'">
+        @for (post of sortedPosts(); track post.id) {
+          <app-item-card [post]="post" [layout]="view.layout()" [compact]="view.density() === 'compact'"></app-item-card>
+        }
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (!postService.loading() && postService.posts().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon-box">
+          <span class="material-symbols-outlined empty-icon">inventory_2</span>
+        </div>
+        <h3 class="empty-title">No items found</h3>
+        <p class="empty-desc">
+          @if (searchQuery() || activeCategory() || freeOnly()) {
+            No listings match your active filters. Try clearing your search or category selection.
+          } @else {
+            There are currently no items listed. Be the first to post a giveaway!
+          }
+        </p>
+        @if (searchQuery() || activeCategory() || freeOnly()) {
+          <button type="button" class="btn-secondary reset-btn" (click)="resetFilters()">
+            Clear Filters
+          </button>
+        }
+      </div>
+    }
+  </main>
+
+  <!-- Floating Action Button (FAB) -->
+  <a routerLink="/post" class="fab-post-btn" aria-label="Post an item">
+    <span class="material-symbols-outlined fab-icon">add</span>
+    <span class="fab-text">Post Item</span>
+  </a>
+
+  <!-- Sticky Bottom Navigation Bar -->
+  <app-bottom-nav></app-bottom-nav>
+</div>

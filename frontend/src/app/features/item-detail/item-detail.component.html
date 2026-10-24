@@ -1,0 +1,303 @@
+<div class="detail-page">
+  <!-- Toast Notification Overlay -->
+  @if (toastMessage()) {
+    <div class="toast-wrapper">
+      <div class="toast-card">
+        <span class="material-symbols-outlined toast-icon">check_circle</span>
+        <span class="toast-text">{{ toastMessage() }}</span>
+        <button type="button" class="toast-dismiss-btn" (click)="dismissToast()" aria-label="Dismiss toast">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="detail-loading">
+      <div class="spinner"></div>
+      <p>Loading item details...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (!loading() && error()) {
+    <div class="detail-error">
+      <span class="material-symbols-outlined error-icon">error_outline</span>
+      <h2>{{ error() }}</h2>
+      <a routerLink="/" class="btn-primary back-home-btn">Return to Browse</a>
+    </div>
+  }
+
+  <!-- Main Detail View -->
+  @if (!loading() && post(); as item) {
+    <div class="detail-container">
+      <!-- Media Showcase / Header Scrim -->
+      <div class="showcase-container">
+        <img
+          [src]="item.photoUrl"
+          [alt]="item.title"
+          class="showcase-img"
+          (error)="onImageError($event)">
+
+        <!-- Top Floating Controls -->
+        <div class="top-nav-overlay">
+          <a routerLink="/" class="icon-bubble" aria-label="Back to browse">
+            <span class="material-symbols-outlined">arrow_back</span>
+          </a>
+          <div class="top-actions-right">
+            <button type="button" class="icon-bubble" (click)="openFlierModal()" aria-label="Print dorm flier" title="Print Campus Flier & QR">
+              <span class="material-symbols-outlined">print</span>
+            </button>
+            <button type="button" class="icon-bubble" (click)="shareListing()" aria-label="Share listing">
+              <span class="material-symbols-outlined">share</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Price Badge Overlay -->
+        <div class="price-overlay">
+          @if (item.isFree) {
+            <span class="pill-price-free price-lg">FREE</span>
+          } @else {
+            <span class="pill-price-paid price-lg">\${{ item.price | number:'1.2-2' }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- Item Content Section -->
+      <div class="content-body">
+        <!-- Title & Status -->
+        <div class="title-row">
+          <h1 class="item-title">{{ item.title }}</h1>
+          @if (item.status === 'CLAIMED') {
+            <span class="claimed-badge">CLAIMED</span>
+          }
+        </div>
+
+        <!-- Metadata Chips -->
+        <div class="chips-wrap">
+          <span class="chip">
+            <span class="material-symbols-outlined chip-icon-gold">verified</span>
+            <span>{{ formatCondition(item.condition) }}</span>
+          </span>
+          <span class="chip">
+            <span class="material-symbols-outlined">category</span>
+            <span>{{ item.category }}</span>
+          </span>
+          <span class="chip">
+            <span class="material-symbols-outlined chip-icon-red">location_on</span>
+            <span>{{ item.pickupLocation }}</span>
+          </span>
+        </div>
+
+        <!-- Moving Out / Expiry Window -->
+        <div class="window-callout">
+          <div class="callout-icon-box">
+            <span class="material-symbols-outlined">timelapse</span>
+          </div>
+          <div>
+            <span class="callout-title">Moving Out Deadline</span>
+            <span class="callout-date">Available until {{ formatDate(item.availableUntil) }}</span>
+          </div>
+        </div>
+
+        <!-- Poster Profile Row (Contact is never exposed here) -->
+        <div class="seller-card">
+          <div class="seller-avatar">
+            {{ item.posterName.charAt(0).toUpperCase() }}
+          </div>
+          <div class="seller-info">
+            <span class="seller-name">{{ item.posterName }}</span>
+            <span class="seller-sub">RPI Student · Campus Poster</span>
+          </div>
+        </div>
+
+        <!-- Social Proof / Interest Banner -->
+        @if (interestSummary() && (((interestSummary()!.count ?? 0) > 0) || ((interestSummary()!.totalCount ?? 0) > 0))) {
+          <div class="interest-banner">
+            <span class="material-symbols-outlined fire-icon">local_fire_department</span>
+            <div class="interest-text-block">
+              <strong>{{ interestSummary()!.count || interestSummary()!.totalCount }} {{ (interestSummary()!.count || interestSummary()!.totalCount) === 1 ? 'person is' : 'people are' }} interested</strong>
+              @if (interestSummary()!.firstNames.length > 0) {
+                <span class="interest-names">
+                  {{ interestSummary()!.firstNames.join(', ') }} expressed interest
+                </span>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Description -->
+        <section class="description-section">
+          <h2 class="section-heading">About this item</h2>
+          <p class="description-text">{{ item.description }}</p>
+        </section>
+
+        <!-- Admin Moderation Controls -->
+        @if (authService.currentUser()?.isAdmin) {
+          <div class="admin-moderation-card" role="region" aria-label="Administrator Moderation Tools">
+            <div class="admin-card-header">
+              <span class="material-symbols-outlined admin-shield-icon">shield_person</span>
+              <span class="admin-card-title">Super Admin Controls (John Pole)</span>
+            </div>
+            <div class="admin-card-actions">
+              @if (item.status === 'CLAIMED' || item.status === 'TAKEN') {
+                <button type="button" class="admin-action-btn btn-reopen" (click)="adminMarkStatus('AVAILABLE')">
+                  <span class="material-symbols-outlined">restart_alt</span>
+                  <span>Mark Available</span>
+                </button>
+              } @else {
+                <button type="button" class="admin-action-btn btn-taken" (click)="adminMarkStatus('TAKEN')">
+                  <span class="material-symbols-outlined">check_circle</span>
+                  <span>Mark as Taken</span>
+                </button>
+              }
+              <button type="button" class="admin-action-btn btn-delete" (click)="adminDeletePost()">
+                <span class="material-symbols-outlined">delete_forever</span>
+                <span>Delete Item</span>
+              </button>
+              <button type="button" class="admin-action-btn btn-ai" (click)="adminToggleAi()">
+                <span class="material-symbols-outlined">auto_awesome</span>
+                <span>Toggle AI Vision</span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Sticky Bottom Action Bar -->
+      <footer class="bottom-action-bar">
+        @if (item.status === 'CLAIMED') {
+          <button type="button" class="btn-primary btn-claimed" disabled>
+            Item Has Been Claimed
+          </button>
+        } @else {
+          <button
+            type="button"
+            class="btn-primary btn-interest-cta"
+            (click)="openInterestSheet()"
+            id="open-interest-modal">
+            <span class="material-symbols-outlined">send</span>
+            <span>I'm interested</span>
+          </button>
+        }
+      </footer>
+    </div>
+  }
+
+  <!-- Bottom Sheet Modal Backdrop & Panel -->
+  <div
+    class="sheet-backdrop"
+    [class.open]="sheetOpen()"
+    (click)="closeInterestSheet()">
+    <div
+      class="sheet-panel"
+      [class.open]="sheetOpen()"
+      (click)="$event.stopPropagation()">
+      <!-- Handle -->
+      <div class="sheet-handle"></div>
+
+      <!-- Sheet Header -->
+      <div class="sheet-header">
+        <div>
+          <h3 class="sheet-title">Express Interest</h3>
+          <p class="sheet-subtitle">Send a direct handoff note to {{ post()?.posterName }}</p>
+        </div>
+        <button type="button" class="icon-close-btn" (click)="closeInterestSheet()" aria-label="Close sheet">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- Sheet Error Banner -->
+      @if (sheetError()) {
+        <div class="sheet-error-banner">
+          <span class="material-symbols-outlined">error</span>
+          <span>{{ sheetError() }}</span>
+        </div>
+      }
+
+      <!-- Interest Form -->
+      <form [formGroup]="interestForm" (ngSubmit)="submitInterest()" class="interest-form" id="interest-form">
+        <div class="form-group">
+          <label class="form-label" for="interest-name">Your Full Name</label>
+          <input
+            id="interest-name"
+            type="text"
+            formControlName="name"
+            class="form-input"
+            placeholder="e.g. Jordan Chen"
+            autocomplete="name">
+          @if (interestForm.get('name')?.invalid && interestForm.get('name')?.touched) {
+            <span class="field-error">Name is required</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="interest-contact">Campus Email or Phone Number</label>
+          <input
+            id="interest-contact"
+            type="text"
+            formControlName="contact"
+            class="form-input"
+            placeholder="e.g. jchen@rpi.edu or +15185550100"
+            autocomplete="email">
+          @if (interestForm.get('contact')?.invalid && interestForm.get('contact')?.touched) {
+            <span class="field-error">Enter a valid email or E.164 phone number (+1...)</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="interest-message">Message to {{ post()?.posterName }}</label>
+          <textarea
+            id="interest-message"
+            formControlName="message"
+            class="form-textarea"
+            rows="3"
+            placeholder="When can you pick this up?">
+          </textarea>
+          @if (interestForm.get('message')?.invalid && interestForm.get('message')?.touched) {
+            <span class="field-error">Message cannot exceed 500 characters</span>
+          }
+        </div>
+
+        <!-- Quick Suggestion Chips -->
+        <div class="suggestions-row">
+          <button type="button" class="sugg-chip" (click)="applyQuickSuggestion('Tonight at 7pm')">
+            ⚡️ Tonight at 7pm
+          </button>
+          <button type="button" class="sugg-chip" (click)="applyQuickSuggestion('Can pick up right now')">
+            📦 Can pick up now
+          </button>
+          <button type="button" class="sugg-chip" (click)="applyQuickSuggestion('I have a hand truck / car')">
+            🚗 Have transport!
+          </button>
+        </div>
+
+        <button
+          type="submit"
+          class="btn-primary submit-interest-btn"
+          [disabled]="isSubmitting()"
+          id="send-interest-btn">
+          @if (isSubmitting()) {
+            <span>Sending note...</span>
+          } @else {
+            <span class="material-symbols-outlined">send</span>
+            <span>Send interest note</span>
+          }
+        </button>
+
+        <p class="privacy-notice">
+          Your contact is only shared directly with the poster to coordinate pickup.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Printable Campus Flier & QR Modal -->
+  <app-flier-modal
+    [isOpen]="flierOpen()"
+    [post]="post()"
+    (closed)="closeFlierModal()">
+  </app-flier-modal>
+</div>

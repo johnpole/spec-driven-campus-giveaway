@@ -1,0 +1,36 @@
+schema: spec-driven
+
+# Project context: constraints an agent cannot infer from the code.
+# General project documentation lives in AGENTS.md.
+context: |
+  Campus Giveaway: mobile-first web app (Angular frontend + Spring Boot backend, one Cloud Run container).
+  Most users arrive on a phone by scanning a QR code; every UI requirement must work at 360–430px wide.
+  Poster contact info is private: never exposed by public list/search/detail endpoints.
+  UI must follow design/DESIGN.md and the screenshots in design/stitch/.
+
+rules:
+  proposal:
+    - Keep proposals under 500 words
+    - Always include an "Out of scope" section
+    - Name which existing requirements are MODIFIED, not just ADDED
+  specs:
+    - Every requirement has at least one WHEN/THEN scenario
+    - Include failure scenarios for validation errors and external service failures
+  design:
+    - State the data model changes (Firestore collections/fields) explicitly
+  tasks:
+    - Each task is at most 30 minutes of work
+    - Order tasks backend first, then frontend, then deploy
+    - Every task ends with a test that proves it
+
+operations:
+  apply:
+    guidance:
+      - Run the relevant tests after each task and fix failures before ticking the box
+      - Stop and ask when a spec is ambiguous instead of guessing
+      - Keep test summaries concise
+      - After the last task, hand off to the verification agent (.agents/skills/change-verifier) — run scripts/verify.sh and write verification.md
+      - Never commit until scripts/verify.sh passes; never use git commit --no-verify
+  archive:
+    guidance:
+      - Summarize which specs changed before finishing
